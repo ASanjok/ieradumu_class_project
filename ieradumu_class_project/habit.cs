@@ -30,7 +30,7 @@ namespace ieradumu_class_project
                 throw new ArgumentException("Creator user ID cannot be null or empty.");
             }
             habit_counter++;
-            this.habit_ID = "habit_" + habit_counter.ToString();
+            this.habit_ID = "habit_" + habit_counter.ToString()+"_ID";
             this.creator_user_ID = creator_user_ID;
             this.habit_name = habit_name;
             this.habit_description = habit_description;
