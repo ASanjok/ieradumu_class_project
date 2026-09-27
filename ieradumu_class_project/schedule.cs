@@ -1,0 +1,57 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace ieradumu_class_project
+{
+    public struct habit_schedule
+    {
+        public string habit_ID;
+        public bool[] is_active_on_weekday;
+    }
+
+    public class schedule
+    {
+        private static int schedule_counter = 0;
+        private string schedule_ID;
+        private string user_ID;
+        private List<habit_schedule> habit_schedules;
+        public schedule(string user_ID, string habit_ID, bool monday, bool tuesday, bool wednesday, bool thursday, bool friday, bool saturday, bool sunday)
+        {
+            schedule_counter++;
+            this.schedule_ID = user_ID + "_schedule_" + schedule_counter.ToString() + "_ID";
+            this.user_ID = user_ID;
+            this.habit_schedules = new List<habit_schedule>();
+            this.habit_schedules.Add(new habit_schedule
+            {
+                habit_ID = habit_ID,
+                is_active_on_weekday = new bool[] { sunday, monday, tuesday, wednesday, thursday, friday, saturday },
+            });
+        }
+        public schedule(string user_ID)
+        {
+            schedule_counter++;
+            this.schedule_ID = user_ID + "_schedule_" + schedule_counter.ToString() + "_ID";
+            this.user_ID = user_ID;
+            this.habit_schedules = new List<habit_schedule>();
+        }
+        public string get_user_ID()
+        {
+            return this.user_ID;
+        }
+        public bool has_habbit(string habit_ID)
+        {
+            return this.habit_schedules.Exists(h => h.habit_ID == habit_ID);
+        }
+        public bool is_scheduled_for_today(string habit_ID)
+        {
+            var habit_schedule = this.habit_schedules.Find(h => h.habit_ID == habit_ID);
+            if (habit_schedule.habit_ID == null)
+            {
+                throw new ArgumentException("Habit ID does not exist in the schedule.");
+            }
+            return habit_schedule.is_active_on_weekday[(int)DateTime.Now.DayOfWeek];
+        }
+
+    }
+}
