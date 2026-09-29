@@ -9,6 +9,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\ieradumu_class_project\ieradumu_class_project.csproj" />
+    <ProjectReference Include="..\shared_data_model_project\shared_data_model_project.csproj" />
   </ItemGroup>
 
 </Project>

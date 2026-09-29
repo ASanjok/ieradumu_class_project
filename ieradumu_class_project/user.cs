@@ -27,5 +27,31 @@ namespace ieradumu_class_project
         {
             return this.user_ID;
         }
+
+        public void change_user(string new_user_name, string new_user_email, string new_user_password)
+        {
+            if (!string.IsNullOrEmpty(new_user_name))
+            {
+                this.user_name = new_user_name;
+            }
+            if (!string.IsNullOrEmpty(new_user_email))
+            {
+                this.user_email = new_user_email;
+            }
+            if (!string.IsNullOrEmpty(new_user_password))
+            {
+                this.user_password = new_user_password;
+            }
+            if (string.IsNullOrEmpty(new_user_name) && string.IsNullOrEmpty(new_user_email) && string.IsNullOrEmpty(new_user_password))
+            {
+                throw new ArgumentException("user hasnt been changed. all name, email and password are null or empty.");
+            }
+            this.user_updated_at = DateTime.Now;
+        }
+
+        public string get_user_data()
+        {
+            return $"User ID: {this.user_ID}, Name: {this.user_name}, Email: {this.user_email}, Password: {this.user_password}, Created At: {this.user_created_at}, Updated At: {this.user_updated_at}";
+        }
     }
 }

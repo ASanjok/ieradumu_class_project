@@ -64,10 +64,10 @@ Console.WriteLine("habits created\n\n");
 
 Console.WriteLine("-------------------------------------------------\n\n");
 
-Console.WriteLine("shouldntn be able to create records\n");
-habit_record habit_record1 = new habit_record("user_2_ID", "habit_1_ID");
-habit_record habit_record2 = new habit_record("user_3_ID", "habit_3_ID");
-Console.WriteLine("end of (shouldntn be able to create records)\n\n");
+//Console.WriteLine("shouldntn be able to create records\n");
+//habit_record habit_record1 = new habit_record("user_2_ID", "habit_1_ID");
+//habit_record habit_record2 = new habit_record("user_3_ID", "habit_3_ID");
+//Console.WriteLine("end of (shouldntn be able to create records)\n\n");
 
 Console.WriteLine("should be able to create records\n");
 schedule schedule1 = new schedule(user2.get_user_ID(), habit1.get_habit_ID(), true, false, false, false, false, false, false);
@@ -76,10 +76,34 @@ habit_record habit_record3 = new habit_record(user2.get_user_ID(), habit1.get_ha
 program_data.habit_record_list.Add(habit_record3);
 Console.WriteLine("end of (should be able to create records)\n\n");
 
-Console.WriteLine("shouldnt be able to create records\n");
+//Console.WriteLine("shouldnt be able to create records\n");
 schedule schedule2 = new schedule(user3.get_user_ID(), habit2.get_habit_ID(), true, false, false, false, false, false, false);
 program_data.schedule_list.Add(schedule2);
 habit2.archive_habit();
-habit_record habit_record4 = new habit_record(user3.get_user_ID(), habit2.get_habit_ID());
-program_data.habit_record_list.Add(habit_record4);
-Console.WriteLine("end of (shouldnt be able to create records)\n\n");
+//habit_record habit_record4 = new habit_record(user3.get_user_ID(), habit2.get_habit_ID());
+//program_data.habit_record_list.Add(habit_record4);
+//Console.WriteLine("end of (shouldnt be able to create records)\n\n");
+Thread.Sleep(5000);
+user3.change_user("user3_changed", "user3_changed@example.com", "");
+Thread.Sleep(2000);
+user5.change_user("aleksandrs", "", "");
+
+foreach (var user in program_data.user_list)
+{
+    Console.WriteLine($"user data: {user.get_user_data()}");
+}
+Console.WriteLine("\n\n------------------------------------------------------------------------\n\n");
+foreach (var habit in program_data.habit_list)
+{
+    Console.WriteLine($"habit data: {habit.get_habit_data()}");
+}
+Console.WriteLine("\n\n------------------------------------------------------------------------\n\n");
+foreach (var schedule in program_data.schedule_list)
+{
+    Console.WriteLine($"schedule data: {schedule.get_schedule_data()}");
+}
+Console.WriteLine("\n\n------------------------------------------------------------------------\n\n");
+foreach (var record in program_data.habit_record_list)
+{
+    Console.WriteLine($"habit record data: {record.get_habit_record_data()}");
+}

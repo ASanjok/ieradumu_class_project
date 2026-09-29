@@ -88,6 +88,10 @@ namespace ieradumu_class_project
         {
             return this.habit_updated_at.ToString();
         }
+        public string get_habit_data()
+        {
+            return $"Habit ID: {this.habit_ID}, Name: {this.habit_name}, Description: {this.habit_description}, Status: {(this.habit_status ? "Active" : "Archived")}, Created At: {this.habit_created_at}, Updated At: {this.habit_updated_at}";
+        }
 
     }
 }

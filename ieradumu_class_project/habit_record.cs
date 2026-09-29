@@ -48,6 +48,10 @@ namespace ieradumu_class_project
             this.habit_ID = habit_ID;
             this.habit_record_done_at = DateTime.Now;
         }
+        public string get_habit_record_data()
+        {
+            return $"Habit Record ID: {this.habit_record_ID}, User ID: {this.user_ID}, Habit ID: {this.habit_ID}, Done At: {this.habit_record_done_at}";
+        }
 
     }
 

@@ -52,6 +52,16 @@ namespace ieradumu_class_project
             }
             return habit_schedule.is_active_on_weekday[(int)DateTime.Now.DayOfWeek];
         }
-
+        public string get_schedule_data()
+        {
+            StringBuilder sb = new StringBuilder();
+            sb.AppendLine($"Schedule ID: {this.schedule_ID}, User ID: {this.user_ID}");
+            sb.AppendLine($"\t\t\t\t\t\t\tsun,\tmon,\ttue,\twed,\tthu,\tfri,\tsat");
+            foreach (var habit_schedule in this.habit_schedules)
+            {
+                sb.AppendLine($"\tHabit ID: {habit_schedule.habit_ID}, Active on Weekdays:\t{string.Join(",\t", habit_schedule.is_active_on_weekday)}");
+            }
+            return sb.ToString();
+        }
     }
 }
