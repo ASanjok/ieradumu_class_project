@@ -6,13 +6,15 @@ namespace ieradumu_class_project
 {
     public class habit_record
     {
-        private static int habit_record_counter = 0;
+        private static int habit_record_counter = 0;// static counter to keep track of the number of habit records created
+                                                    // a temporary solution for unique IDs
         private string habit_record_ID;
         private string user_ID;
         private string habit_ID;
         private DateTime habit_record_done_at;
+        // should be added: status (completed, skipped, completed after time, etc)
 
-        public habit_record(string user_ID, string habit_ID)
+        public habit_record(string user_ID, string habit_ID) //constructor for creating a new habit record
         {
             if (string.IsNullOrEmpty(user_ID))
             {
@@ -48,7 +50,7 @@ namespace ieradumu_class_project
             this.habit_ID = habit_ID;
             this.habit_record_done_at = DateTime.Now;
         }
-        public habit_record(string habit_record_ID, string user_ID, string habit_ID, DateTime habit_record_done_at)
+        public habit_record(string habit_record_ID, string user_ID, string habit_ID, DateTime habit_record_done_at) //constructor for loading habit record data from "DB"
         {
             this.habit_record_ID = habit_record_ID;
             this.user_ID = user_ID;

@@ -70,14 +70,11 @@ Console.WriteLine("schedules creation");
 var schedule1 = new schedule(user1.get_user_ID(), habit2.get_habit_ID(), true, true, true, true, true, false, false);
 program_data.schedule_list.Add(schedule1);
 var schedule2 = new schedule(user1.get_user_ID(), habit4.get_habit_ID(), true, true, true, true, true, false, false);
-program_data.schedule_list.Add(schedule2);
 var schedule3 = new schedule(user1.get_user_ID(), habit6.get_habit_ID(), true, true, true, true, true, false, false);
-program_data.schedule_list.Add(schedule3);
 
 var schedule4 = new schedule(user2.get_user_ID(), habit12.get_habit_ID(), true, true, true, true, true, false, false);
 program_data.schedule_list.Add(schedule4);
 var schedule5 = new schedule(user2.get_user_ID(), habit14.get_habit_ID(), true, true, true, true, true, false, false);
-program_data.schedule_list.Add(schedule5);  
 
 var schedule6 = new schedule(user3.get_user_ID(), habit6.get_habit_ID(), true, true, true, true, true, false, false);
 program_data.schedule_list.Add(schedule6);
@@ -85,7 +82,6 @@ program_data.schedule_list.Add(schedule6);
 var schedule7 = new schedule(user4.get_user_ID(), habit2.get_habit_ID(), true, true, true, true, true, false, false);
 program_data.schedule_list.Add(schedule7);
 var schedule8 = new schedule(user4.get_user_ID(), habit15.get_habit_ID(), true, true, true, true, true, false, false);
-program_data.schedule_list.Add(schedule8);
 Console.WriteLine("schedules created\n");
 
 var control_date = new DateTime(2026, 9, 28,14,30,00);
@@ -107,26 +103,26 @@ var habit_record7 = new habit_record("habit_record_1006", user4.get_user_ID(), h
 program_data.habit_record_list.Add(habit_record7);
 Console.WriteLine("habit completion records created\n");
 
-Console.WriteLine("changing user1 data\nwait...");
-Thread.Sleep(1000);
-Console.WriteLine("wait.");
-Thread.Sleep(1000);
-Console.WriteLine("wait..");
-Thread.Sleep(1000);
-Console.WriteLine("wait...");
-Thread.Sleep(1000);
-Console.WriteLine("wait.");
-Thread.Sleep(1000);
-Console.WriteLine("wait..");
-user1.change_user("user1_changed", "user1_changed@example.com", "");
-Thread.Sleep(1000);
-Console.WriteLine("changing user2 data\nwait...");
-Thread.Sleep(1000);
-Console.WriteLine("wait.");
-Thread.Sleep(1000);
-Console.WriteLine("wait..");
-user2.change_user("aleksandrs", "", "");
-Console.WriteLine("user data changed\n");
+//Console.WriteLine("changing user1 data\nwait...");
+//Thread.Sleep(1000);
+//Console.WriteLine("wait.");
+//Thread.Sleep(1000);
+//Console.WriteLine("wait..");
+//Thread.Sleep(1000);
+//Console.WriteLine("wait...");
+//Thread.Sleep(1000);
+//Console.WriteLine("wait.");
+//Thread.Sleep(1000);
+//Console.WriteLine("wait..");
+//user1.change_user("user1_changed", "user1_changed@example.com", "");
+//Thread.Sleep(1000);
+//Console.WriteLine("changing user2 data\nwait...");
+//Thread.Sleep(1000);
+//Console.WriteLine("wait.");
+//Thread.Sleep(1000);
+//Console.WriteLine("wait..");
+//user2.change_user("aleksandrs", "", "");
+//Console.WriteLine("user data changed\n");
 
 Console.WriteLine("-------------------------------------------------\n\tusers data\n\n");
 

@@ -10,7 +10,7 @@ namespace shared_data_model_project
         public string user_email { get; set; }
         public string user_password { get; set; }
     }
-    public class show_user_full
+    public class show_user
     {
         public string user_ID { get; set; }
         public string user_name { get; set; }
@@ -24,9 +24,5 @@ namespace shared_data_model_project
         public string user_name { get; set; }
         public string user_email { get; set; }
         public string user_password { get; set; }
-    }
-    public class delete_user
-    {
-        public string user_ID { get; set; }
     }
 }

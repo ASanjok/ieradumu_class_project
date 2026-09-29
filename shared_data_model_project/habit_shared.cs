@@ -32,9 +32,4 @@ namespace shared_data_model_project
         public string habit_name { get; set; }
         public string habit_description { get; set; }
     }
-    public class delete_habit
-    {
-        public string habit_ID { get; set; }
-        public string user_ID { get; set; }
-    }
 }

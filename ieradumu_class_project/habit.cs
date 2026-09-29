@@ -6,7 +6,8 @@ namespace ieradumu_class_project
 {
     public class habit
     {
-        private static int habit_counter = 0;
+        private static int habit_counter = 0; // static counter to keep track of the number of habits created
+                                              // a temporary solution for unique IDs
         private string habit_ID;
         private string creator_user_ID;
         private string habit_name;
@@ -15,7 +16,7 @@ namespace ieradumu_class_project
         private DateTime habit_created_at;
         private DateTime habit_updated_at;
 
-        public habit(string habit_name, string habit_description, string creator_user_ID)
+        public habit(string habit_name, string habit_description, string creator_user_ID) //constructor for creating a new habit
         {
             if (string.IsNullOrEmpty(habit_name))
             {
@@ -38,7 +39,7 @@ namespace ieradumu_class_project
             this.habit_created_at = DateTime.Now;
             this.habit_updated_at = DateTime.Now;
         }
-        public habit(string habit_ID, string habit_name, string habit_description, bool habit_status, string creator_user_ID, DateTime habit_created_at, DateTime habit_updated_at)
+        public habit(string habit_ID, string habit_name, string habit_description, bool habit_status, string creator_user_ID, DateTime habit_created_at, DateTime habit_updated_at) // constructor for loading habit data from "DB"
         {
             this.habit_ID = habit_ID;
             this.creator_user_ID = creator_user_ID;
@@ -55,17 +56,17 @@ namespace ieradumu_class_project
         }
         public void change_habit(string new_habit_name, string new_habit_description)
         {
-            if (!string.IsNullOrEmpty(new_habit_name))
+            if (string.IsNullOrEmpty(new_habit_name) && string.IsNullOrEmpty(new_habit_description)) //if both the new habit name and description are null or empty, throw an exception
+            {
+                throw new ArgumentException("habit hasnt been changed. both name and description are null or empty.");
+            }
+            if (!string.IsNullOrEmpty(new_habit_name)) //if the new habit name is not null or empty, change the habit name
             {
                 this.habit_name = new_habit_name;
             }
-            if (!string.IsNullOrEmpty(new_habit_description))
+            if (!string.IsNullOrEmpty(new_habit_description)) //if the new habit description is not null or empty, change the habit description
             {
                 this.habit_description = new_habit_description;
-            }
-            if (string.IsNullOrEmpty(new_habit_name) && string.IsNullOrEmpty(new_habit_description))
-            {
-                throw new ArgumentException("habit hasnt been changed. both name and description are null or empty.");
             }
             this.habit_updated_at = DateTime.Now;
         }
@@ -77,10 +78,6 @@ namespace ieradumu_class_project
         public string get_habit_name()
         {
             return this.habit_name;
-        }
-        public string get_habit_description()
-        {
-            return this.habit_description;
         }
         public bool get_habit_status()
         {

@@ -5,7 +5,7 @@ using System.Text;
 namespace shared_data_model_project
 
 {
-    public class habit_schedule
+    public class habit_schedule // class that represents structure from schedule class,
     {
         public string habit_ID { get; set; }
         public bool[] is_active_on_weekday { get; set; }
@@ -24,10 +24,6 @@ namespace shared_data_model_project
     {
         public string user_ID { get; set; }
         public List<habit_schedule> habit_schedules { get; set; }
-    }
-    public class delete_schedule
-    {
-        public string schedule_ID { get; set; }
     }
     
 }
