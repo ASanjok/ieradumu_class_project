@@ -1,7 +1,7 @@
 ﻿using ieradumu_class_project;
 Console.WriteLine("program started\n\n");
 
-Console.WriteLine("creating users\n");
+Console.WriteLine("creating users");
 var user1 = new user("user1", "user1@gmail.com", "password1");
 program_data.user_list.Add(user1);
 var user2 = new user("user2", "user2@gmail.com", "password2");
@@ -12,9 +12,9 @@ var user4 = new user("user4", "user4@gmail.com", "password4");
 program_data.user_list.Add(user4);
 var user5 = new user("user5", "user5@gmail.com", "password5");
 program_data.user_list.Add(user5);
-Console.WriteLine("users created\n\n");
+Console.WriteLine("users created\n");
 
-Console.WriteLine("creating habits\n");
+Console.WriteLine("creating habits");
 var habit1 = new habit("habit1", "description1", "user1");
 program_data.habit_list.Add(habit1);
 var habit2 = new habit("habit2", "description2", "user1");
@@ -55,18 +55,18 @@ var habit17 = new habit("habit17", "description17", "user4");
 program_data.habit_list.Add(habit17);
 var habit18 = new habit("habit18", "description18", "user5");
 program_data.habit_list.Add(habit18);
-Console.WriteLine("habits created\n\n");
+Console.WriteLine("habits created\n");
 
-Console.WriteLine("archiving habits\n");
+Console.WriteLine("archiving habits");
 habit1.archive_habit();
 habit3.archive_habit();
 habit5.archive_habit();
 habit7.archive_habit();
 habit8.archive_habit();
 habit9.archive_habit();
-Console.WriteLine("habits archived\n\n");
+Console.WriteLine("habits archived\n");
 
-Console.WriteLine("schedules creation\n");
+Console.WriteLine("schedules creation");
 var schedule1 = new schedule(user1.get_user_ID(), habit2.get_habit_ID(), true, true, true, true, true, false, false);
 program_data.schedule_list.Add(schedule1);
 var schedule2 = new schedule(user1.get_user_ID(), habit4.get_habit_ID(), true, true, true, true, true, false, false);
@@ -86,11 +86,11 @@ var schedule7 = new schedule(user4.get_user_ID(), habit2.get_habit_ID(), true, t
 program_data.schedule_list.Add(schedule7);
 var schedule8 = new schedule(user4.get_user_ID(), habit15.get_habit_ID(), true, true, true, true, true, false, false);
 program_data.schedule_list.Add(schedule8);
-Console.WriteLine("schedules created\n\n");
+Console.WriteLine("schedules created\n");
 
 var control_date = new DateTime(2026, 9, 28,14,30,00);
 
-Console.WriteLine("habit completion records creation\n");
+Console.WriteLine("habit completion records creation");
 var habit_record1 = new habit_record("habit_record_1000", user1.get_user_ID(), habit1.get_habit_ID(), control_date.AddDays(-7));
 program_data.habit_record_list.Add(habit_record1);
 var habit_record2 = new habit_record("habit_record_1001", user1.get_user_ID(), habit1.get_habit_ID(), control_date.AddDays(-14));
@@ -107,30 +107,46 @@ var habit_record7 = new habit_record("habit_record_1006", user4.get_user_ID(), h
 program_data.habit_record_list.Add(habit_record7);
 Console.WriteLine("habit completion records created\n");
 
-Console.WriteLine("-------------------------------------------------\n\n");
+Console.WriteLine("changing user1 data\nwait...");
+Thread.Sleep(1000);
+Console.WriteLine("wait.");
+Thread.Sleep(1000);
+Console.WriteLine("wait..");
+Thread.Sleep(1000);
+Console.WriteLine("wait...");
+Thread.Sleep(1000);
+Console.WriteLine("wait.");
+Thread.Sleep(1000);
+Console.WriteLine("wait..");
+user1.change_user("user1_changed", "user1_changed@example.com", "");
+Thread.Sleep(1000);
+Console.WriteLine("changing user2 data\nwait...");
+Thread.Sleep(1000);
+Console.WriteLine("wait.");
+Thread.Sleep(1000);
+Console.WriteLine("wait..");
+user2.change_user("aleksandrs", "", "");
+Console.WriteLine("user data changed\n");
+
+Console.WriteLine("-------------------------------------------------\n\tusers data\n\n");
 
 
-
-Thread.Sleep(5000);
-user3.change_user("user3_changed", "user3_changed@example.com", "");
-Thread.Sleep(2000);
-user5.change_user("aleksandrs", "", "");
 
 foreach (var user in program_data.user_list)
 {
     Console.WriteLine($"user data: {user.get_user_data()}");
 }
-Console.WriteLine("\n\n------------------------------------------------------------------------\n\n");
+Console.WriteLine("\n\n------------------------------------------------------------------------\n\thabits data\n\n");
 foreach (var habit in program_data.habit_list)
 {
     Console.WriteLine($"habit data: {habit.get_habit_data()}");
 }
-Console.WriteLine("\n\n------------------------------------------------------------------------\n\n");
+Console.WriteLine("\n\n------------------------------------------------------------------------\n\tschedules data\n\n");
 foreach (var schedule in program_data.schedule_list)
 {
     Console.WriteLine($"schedule data: {schedule.get_schedule_data()}");
 }
-Console.WriteLine("\n\n------------------------------------------------------------------------\n\n");
+Console.WriteLine("\n\n------------------------------------------------------------------------\n\thabit completion data\n\n");
 foreach (var record in program_data.habit_record_list)
 {
     Console.WriteLine($"habit record data: {record.get_habit_record_data()}");
