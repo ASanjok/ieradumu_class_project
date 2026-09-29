@@ -103,26 +103,26 @@ var habit_record7 = new habit_record("habit_record_1006", user4.get_user_ID(), h
 program_data.habit_record_list.Add(habit_record7);
 Console.WriteLine("habit completion records created\n");
 
-//Console.WriteLine("changing user1 data\nwait...");
-//Thread.Sleep(1000);
-//Console.WriteLine("wait.");
-//Thread.Sleep(1000);
-//Console.WriteLine("wait..");
-//Thread.Sleep(1000);
-//Console.WriteLine("wait...");
-//Thread.Sleep(1000);
-//Console.WriteLine("wait.");
-//Thread.Sleep(1000);
-//Console.WriteLine("wait..");
-//user1.change_user("user1_changed", "user1_changed@example.com", "");
-//Thread.Sleep(1000);
-//Console.WriteLine("changing user2 data\nwait...");
-//Thread.Sleep(1000);
-//Console.WriteLine("wait.");
-//Thread.Sleep(1000);
-//Console.WriteLine("wait..");
-//user2.change_user("aleksandrs", "", "");
-//Console.WriteLine("user data changed\n");
+Console.WriteLine("changing user1 data\nwait...");
+Thread.Sleep(1000);
+Console.WriteLine("wait.");
+Thread.Sleep(1000);
+Console.WriteLine("wait..");
+Thread.Sleep(1000);
+Console.WriteLine("wait...");
+Thread.Sleep(1000);
+Console.WriteLine("wait.");
+Thread.Sleep(1000);
+Console.WriteLine("wait..");
+user1.change_user("user1_changed", "user1_changed@example.com", "");
+Thread.Sleep(1000);
+Console.WriteLine("changing user2 data\nwait...");
+Thread.Sleep(1000);
+Console.WriteLine("wait.");
+Thread.Sleep(1000);
+Console.WriteLine("wait..");
+user2.change_user("aleksandrs", "", "");
+Console.WriteLine("user data changed\n");
 
 Console.WriteLine("-------------------------------------------------\n\tusers data\n\n");
 
