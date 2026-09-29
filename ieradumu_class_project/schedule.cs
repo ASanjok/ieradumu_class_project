@@ -19,14 +19,33 @@ namespace ieradumu_class_project
         public schedule(string user_ID, string habit_ID, bool monday, bool tuesday, bool wednesday, bool thursday, bool friday, bool saturday, bool sunday)
         {
             schedule_counter++;
-            this.schedule_ID = user_ID + "_schedule_" + schedule_counter.ToString() + "_ID";
-            this.user_ID = user_ID;
-            this.habit_schedules = new List<habit_schedule>();
-            this.habit_schedules.Add(new habit_schedule
+            if (program_data.schedule_list.Find(s => s.get_user_ID() == user_ID) == null)
             {
-                habit_ID = habit_ID,
-                is_active_on_weekday = new bool[] { sunday, monday, tuesday, wednesday, thursday, friday, saturday },
-            });
+                this.schedule_ID = user_ID + "_schedule_" + schedule_counter.ToString() + "_ID";
+                this.user_ID = user_ID;
+                this.habit_schedules = new List<habit_schedule>();
+                this.habit_schedules.Add(new habit_schedule
+                {
+                    habit_ID = habit_ID,
+                    is_active_on_weekday = new bool[] { sunday, monday, tuesday, wednesday, thursday, friday, saturday },
+                });
+            }
+            else
+            {
+                var existing_schedule = program_data.schedule_list.Find(s => s.get_user_ID() == user_ID);
+                this.schedule_ID = existing_schedule.schedule_ID;
+                this.user_ID = existing_schedule.user_ID;
+                this.habit_schedules = existing_schedule.habit_schedules;
+                if (this.habit_schedules.Exists(h => h.habit_ID == habit_ID))
+                {
+                    throw new ArgumentException("Habit ID already exists in the schedule.");
+                }
+                this.habit_schedules.Add(new habit_schedule
+                {
+                    habit_ID = habit_ID,
+                    is_active_on_weekday = new bool[] { sunday, monday, tuesday, wednesday, thursday, friday, saturday },
+                });
+            }
         }
         public schedule(string schedule_ID, string user_ID, List<habit_schedule> habit_schedules)
         {
