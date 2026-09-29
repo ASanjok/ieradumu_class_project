@@ -28,6 +28,12 @@ namespace ieradumu_class_project
                 is_active_on_weekday = new bool[] { sunday, monday, tuesday, wednesday, thursday, friday, saturday },
             });
         }
+        public schedule(string schedule_ID, string user_ID, List<habit_schedule> habit_schedules)
+        {
+            this.schedule_ID = schedule_ID;
+            this.user_ID = user_ID;
+            this.habit_schedules = habit_schedules;
+        }
         public schedule(string user_ID)
         {
             schedule_counter++;

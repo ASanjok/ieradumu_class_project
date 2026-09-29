@@ -16,12 +16,21 @@ namespace ieradumu_class_project
         public user(string user_name, string user_email, string user_password)
         {
             user_counter++;
-            this.user_ID = "user_" + user_counter.ToString()+"_ID";
+            this.user_ID = "user_" + user_counter.ToString() + "_ID";
             this.user_name = user_name;
             this.user_email = user_email;
             this.user_password = user_password;
             this.user_created_at = DateTime.Now;
             this.user_updated_at = DateTime.Now;
+        }
+        public user(string user_ID, string user_name, string user_email, string user_password, DateTime user_created_at, DateTime user_updated_at)
+        {
+            this.user_ID = user_ID;
+            this.user_name = user_name;
+            this.user_email = user_email;
+            this.user_password = user_password;
+            this.user_created_at = user_created_at;
+            this.user_updated_at = user_updated_at;
         }
         public string get_user_ID()
         {

@@ -38,6 +38,16 @@ namespace ieradumu_class_project
             this.habit_created_at = DateTime.Now;
             this.habit_updated_at = DateTime.Now;
         }
+        public habit(string habit_ID, string habit_name, string habit_description, bool habit_status, string creator_user_ID, DateTime habit_created_at, DateTime habit_updated_at)
+        {
+            this.habit_ID = habit_ID;
+            this.creator_user_ID = creator_user_ID;
+            this.habit_name = habit_name;
+            this.habit_description = habit_description;
+            this.habit_status = habit_status;
+            this.habit_created_at = habit_created_at;
+            this.habit_updated_at = habit_updated_at;
+        }
         public void archive_habit()
         {
             this.habit_status = false;
