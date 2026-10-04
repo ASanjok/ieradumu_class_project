@@ -1,5 +1,5 @@
 <Solution>
-  <Project Path="ieraduma_test_console_project/ieraduma_test_console_project.csproj" />
-  <Project Path="ieradumu_class_project/ieradumu_class_project.csproj" />
-  <Project Path="shared_data_model_project/shared_data_model_project.csproj" Id="719ab125-3a26-4d1a-98fd-d1cdf4d44416" />
+  <Project Path="class_project_ieradumi/class_project_ieradumi.csproj" Id="bdeb7cc8-eed7-4ab9-af09-dc27bbec114f" />
+  <Project Path="console_project_ieradumi/console_project_ieradumi.csproj" Id="0d59f030-fff2-4faf-ac15-06a6f94998c0" />
+  <Project Path="shared_object_ieradumi/shared_object_ieradumi.csproj" Id="4c05fc97-fa96-4a18-b5f0-3447ba6f943c" />
 </Solution>
