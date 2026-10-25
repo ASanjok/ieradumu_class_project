@@ -97,8 +97,7 @@ namespace class_project_ieradumi
 
         public schedule(string ID, string user_ID, bool archived, List<scheduled_habits> scheduled_habits, DateTime schedule_creation_date, DateTime schedule_last_change_date) // Constructor for creating object of already existing schedule
         {
-            string start_of_ID = ID.Substring(0, 12);
-            if (start_of_ID != "schedule_ID_")
+            if (string.IsNullOrEmpty(ID) || ID.Length < 12 || !ID.StartsWith("schedule_ID_"))
             {
                 throw new ArgumentException("ID is not valid. It must start with 'schedule_ID_<unique_id>'.");
             }
@@ -154,7 +153,7 @@ namespace class_project_ieradumi
         //add methods for schedule class
         public void add_scheduled_habit(string habit_ID, List<TimeOnly> monday, List<TimeOnly> tuesday, List<TimeOnly> wednesday, List<TimeOnly> thursday, List<TimeOnly> friday, List<TimeOnly> saturday, List<TimeOnly> sunday)
         {
-            if (habit_ID.Substring(0, 9) != "habit_ID_")
+            if (string.IsNullOrEmpty(habit_ID) || habit_ID.Length < 12 || habit_ID.Substring(0, 12) != "habit_ID_")
             {
                 throw new ArgumentException("Habit ID is not valid. It must start with 'habit_ID_<unique_id>'.");
             }
