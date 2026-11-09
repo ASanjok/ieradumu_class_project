@@ -1,21 +1,38 @@
-﻿using System;
+﻿using SQLite;
+using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Text.Json;
 
 namespace class_project_ieradumi
 {
     public class CompletionRecord
     {
-        public string ID { get; set; }
+        public string ID { 
+            get; 
+            set 
+            { 
+                ID = "completion_record_ID_" + value; 
+            } 
+        }
+
         public string HabitID { get; set; }
+        [Ignore]
         public Dictionary<string, TimeOnly> ScheduleTime { get; set; }
+        public string ScheduleTimeJSON
+        {
+            get => JsonSerializer.Serialize(ScheduleTime);
+            set => ScheduleTime = string.IsNullOrEmpty(value)
+               ? new Dictionary<string, TimeOnly>()
+               : JsonSerializer.Deserialize<Dictionary<string, TimeOnly>>(value) ?? new Dictionary<string, TimeOnly>();
+        }
+        
         public DateTime CompletionDate { get; set; }
         public string UserID { get; set; }
         public bool InTime { get; set; }
 
         public CompletionRecord()
         {
-
         }
         public CompletionRecord(string HabitID, DateTime CompletionDate, string UserID, bool InTime, string ID, Dictionary<string, TimeOnly> ScheduleTime) // Constructor for creating object of already existing completion_record
         {
@@ -48,26 +65,5 @@ namespace class_project_ieradumi
                 this.InTime = false; // If there is no scheduled time for the day, consider it as not in time
             }
         }
-        public string GetID()
-        {
-            return this.ID;
-        }
-        public string GetHabitID()
-        {
-            return this.HabitID;
-        }
-        public DateTime GetCompletionDate()
-        {
-            return this.CompletionDate;
-        }
-        public string GetUserID()
-        {
-            return this.UserID;
-        }
-        public bool IsInTime()
-        {
-            return this.InTime;
-        }
-
     }
 }

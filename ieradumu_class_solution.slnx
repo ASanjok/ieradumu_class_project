@@ -4,6 +4,8 @@
   <Project Path="maui_app_ieradumi/maui_app_ieradumi.csproj" Id="f8721f78-6f4b-4f82-b35b-ac04b35460b6">
     <Deploy Solution="Debug|*" />
   </Project>
-  <Project Path="maui_app_ieradumi_2/maui_app_ieradumi_2.csproj" Id="cbd4e72a-ddc6-4503-905f-90de241b7bb1" />
+  <Project Path="maui_app_ieradumi_2/maui_app_ieradumi_2.csproj" Id="cbd4e72a-ddc6-4503-905f-90de241b7bb1">
+    <Deploy Solution="Debug|*" />
+  </Project>
   <Project Path="shared_object_ieradumi/shared_object_ieradumi.csproj" Id="4c05fc97-fa96-4a18-b5f0-3447ba6f943c" />
 </Solution>

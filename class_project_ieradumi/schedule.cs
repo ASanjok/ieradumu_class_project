@@ -9,7 +9,7 @@ namespace class_project_ieradumi
         public string HabitID
         {
             get => _habitID;
-            set => _habitID = value;
+            set => _habitID = "habit_schedule_ID_" + value;
         }
 
         private Dictionary<string, List<TimeOnly>> _whenIsScheduled;
@@ -146,7 +146,6 @@ namespace class_project_ieradumi
 
         public Schedule()
         {
-
             _scheduleCreationDate = DateTime.Now;
             _scheduleLastChangeDate = DateTime.Now;
         }

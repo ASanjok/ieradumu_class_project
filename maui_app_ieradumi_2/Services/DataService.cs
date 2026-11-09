@@ -25,7 +25,7 @@ namespace maui_app_ieradumi_2.Services
             {
                 var defaultUser = new User
                 {
-                    ID = "user_default_1",
+                    ID = "DefaultUserID1",
                     Username = "aleksandrs",
                     Password = "1234"
                 };
@@ -37,7 +37,30 @@ namespace maui_app_ieradumi_2.Services
         {
             if (!string.IsNullOrEmpty(username) && !string.IsNullOrEmpty(password))
             {
-                return true;
+                var user = await _connection.FindAsync<User>(u => u.Username == username && u.Password == password);
+                if (user != null)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+        public async Task<bool> RegisterAsync(string username, string password)
+        {
+            if (!string.IsNullOrEmpty(username) && !string.IsNullOrEmpty(password))
+            {
+                var existingUser = await _connection.FindAsync<User>(u => u.Username == username);
+                if (existingUser == null)
+                {
+                    var newUser = new User
+                    {
+                        ID = Guid.NewGuid().ToString(),
+                        Username = username,
+                        Password = password
+                    };
+                    await _connection.InsertAsync(newUser);
+                    return true;
+                }
             }
             return false;
         }

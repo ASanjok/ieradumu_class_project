@@ -7,7 +7,7 @@
             get => _ID; 
             set  
             {
-                _ID = value; 
+                _ID = "habit_ID_" + value; 
                 _habitLastChangeDate = DateTime.Now; 
             }
         }
@@ -63,7 +63,6 @@
         public DateTime HabitLastChangeDate { get => _habitCreationDate; set => _habitCreationDate = value; }
         public Habit()
         {
-
             _habitCreationDate = DateTime.Now;
             _habitLastChangeDate = DateTime.Now;
         }

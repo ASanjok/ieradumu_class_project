@@ -11,7 +11,7 @@
             for (int i = 0; ; i++) // Limit the number of attempts to avoid infinite loops
             {
                 string new_ID = " habit_ID_" + i;
-                bool ID_exists = habits_list.Any(habit => habit.GetUniqueID() == new_ID);
+                bool ID_exists = habits_list.Any(habit => habit.ID == new_ID);
                 if (!ID_exists)
                 {
                     return new_ID;
@@ -23,7 +23,7 @@
             for (int i = 0; ; i++) // Limit the number of attempts to avoid infinite loops
             {
                 string new_ID = "user_ID_" + i;
-                bool ID_exists = users_list.Any(user => user.GetID() == new_ID);
+                bool ID_exists = users_list.Any(user => user.ID == new_ID);
                 if (!ID_exists)
                 {
                     return new_ID;
@@ -35,7 +35,7 @@
             for (int i = 0; ; i++) // Limit the number of attempts to avoid infinite loops
             {
                 string new_ID = "schedule_ID_" + i;
-                bool ID_exists = schedule_list.Any(schedule => schedule.GetID() == new_ID);
+                bool ID_exists = schedule_list.Any(schedule => schedule.ID == new_ID);
                 if (!ID_exists)
                 {
                     return new_ID;
@@ -47,7 +47,7 @@
             for (int i = 0; ; i++) // Limit the number of attempts to avoid infinite loops
             {
                 string new_ID = "completion_record_ID_" + i;
-                bool ID_exists = completion_record_list.Any(record => record.GetID() == new_ID); // Initialize to false
+                bool ID_exists = completion_record_list.Any(record => record.ID == new_ID); // Initialize to false
                 if (!ID_exists)
                 {
                     return new_ID;

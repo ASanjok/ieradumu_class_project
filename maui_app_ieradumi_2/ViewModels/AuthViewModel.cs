@@ -38,11 +38,11 @@ namespace maui_app_ieradumi_2.ViewModels
         {
             if (IsLoginMode)
             {
-                Login();
+                await Login();
             }
             else
             {
-                Register();
+                await Register();
             }
         }
 
@@ -79,8 +79,16 @@ namespace maui_app_ieradumi_2.ViewModels
             }
             if (allowed)
             {
-                await _dataService.LoginAsync(UserName, Password);
-                //await Shell.Current.GoToAsync("//MainPage");
+                bool success = await _dataService.LoginAsync(UserName, Password);
+                if (success)
+                {
+                    //await Shell.Current.GoToAsync("//MainPage");
+                    TopText = "correct!!!";
+                }
+                else
+                {
+                    TopText = "Invalid username or password\n";
+                }
             }
         }
 
@@ -99,8 +107,16 @@ namespace maui_app_ieradumi_2.ViewModels
             }
             if (allowed)
             {
-                //await _dataService.RegisterAsync(UserName, Password);
-                //await Shell.Current.GoToAsync("//MainPage");
+                bool success = await _dataService.RegisterAsync(UserName, Password);
+                if (success)
+                {
+                    //await Shell.Current.GoToAsync("//MainPage");
+                    TopText = "Registered!!!";
+                }
+                else
+                {
+                    TopText = "Username already exists\n";
+                }
             }
         }
 
