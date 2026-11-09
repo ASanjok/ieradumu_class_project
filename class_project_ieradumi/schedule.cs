@@ -1,82 +1,81 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using SQLite;
+using System.Text.Json;
 
 namespace class_project_ieradumi
 {
-    internal class scheduled_habits
+    public class ScheduledHabits
     {
-        private string habit_ID;
-        private Dictionary<string, List<TimeOnly>> when_is_scheduled;
-        private bool archived;
-        public scheduled_habits(string habit_ID, List<TimeOnly> monday, List<TimeOnly> tuesday, List<TimeOnly> wednesday, List<TimeOnly> thursday, List<TimeOnly> friday, List<TimeOnly> saturday, List<TimeOnly> sunday)
+        private string _habitID;
+        public string HabitID
         {
-            this.habit_ID = habit_ID;
-            this.when_is_scheduled = new Dictionary<string, List<TimeOnly>>();
-            this.when_is_scheduled.Add("Monday", monday);
-            this.when_is_scheduled.Add("Tuesday", tuesday);
-            this.when_is_scheduled.Add("Wednesday", wednesday);
-            this.when_is_scheduled.Add("Thursday", thursday);
-            this.when_is_scheduled.Add("Friday", friday);
-            this.when_is_scheduled.Add("Saturday", saturday);
-            this.when_is_scheduled.Add("Sunday", sunday);
-            this.archived = false;
+            get => _habitID;
+            set => _habitID = value;
         }
 
-        // Getters for scheduled_habits class
-        public string get_habit_ID()
+        private Dictionary<string, List<TimeOnly>> _whenIsScheduled;
+        [Ignore]
+        public Dictionary<string, List<TimeOnly>> WhenIsScheduled
         {
-            return this.habit_ID;
+            get => _whenIsScheduled;
+            set => _whenIsScheduled = value;
         }
-        public Dictionary<string, List<TimeOnly>> get_when_is_scheduled()
+        public string WhenIsScheduledJSON
         {
-            return this.when_is_scheduled;
-        }
-        public bool is_archived()
-        {
-            return this.archived;
-        }
-
-        //setters for scheduled_habits class
-        public void set_archived()
-        {
-            this.archived = true;
-        }
-        public void set_unarchived()
-        {
-            this.archived = false;
+            get => JsonSerializer.Serialize(_whenIsScheduled);
+            set => _whenIsScheduled = string.IsNullOrEmpty(value)
+                ? new Dictionary<string, List<TimeOnly>>()
+                : JsonSerializer.Deserialize<Dictionary<string, List<TimeOnly>>>(value) ?? new Dictionary<string, List<TimeOnly>>();
         }
 
+        private bool _archived;
+        public bool Archived
+        {
+            get => _archived;
+            set => _archived = value;
+        }
 
+        public ScheduledHabits(string habit_ID, List<TimeOnly> monday, List<TimeOnly> tuesday, List<TimeOnly> wednesday, List<TimeOnly> thursday, List<TimeOnly> friday, List<TimeOnly> saturday, List<TimeOnly> sunday)
+        {
+            this._habitID = habit_ID;
+            this._whenIsScheduled = new Dictionary<string, List<TimeOnly>>();
+            this._whenIsScheduled.Add("Monday", monday);
+            this._whenIsScheduled.Add("Tuesday", tuesday);
+            this._whenIsScheduled.Add("Wednesday", wednesday);
+            this._whenIsScheduled.Add("Thursday", thursday);
+            this._whenIsScheduled.Add("Friday", friday);
+            this._whenIsScheduled.Add("Saturday", saturday);
+            this._whenIsScheduled.Add("Sunday", sunday);
+            this._archived = false;
+        }
         //add methods for scheduled_habits class
 
-        public void add_scheduled_time(string day_of_week, List<TimeOnly> time)
+        public void AddScheduledTime(string DayOfWeek, List<TimeOnly> Time)
         {
-            if (this.when_is_scheduled.ContainsKey(day_of_week))
+            if (this._whenIsScheduled.ContainsKey(DayOfWeek))
             {
-                this.when_is_scheduled[day_of_week].AddRange(time);
-                this.when_is_scheduled[day_of_week] = this.when_is_scheduled[day_of_week].Distinct().ToList(); // Remove duplicates
+                this._whenIsScheduled[DayOfWeek].AddRange(Time);
+                this._whenIsScheduled[DayOfWeek] = this._whenIsScheduled[DayOfWeek].Distinct().ToList(); // Remove duplicates
             }
             else
             {
-                throw new ArgumentException("Invalid day of the week.");
+                throw new ArgumentException("Invalid day of the week."); // надо как-то поменять 
             }
         }
 
 
         //delete methods for scheduled_habits class
-        public void remove_scheduled_time(string day_of_week, List<TimeOnly> time)
+        public void RemoveScheduledTime(string DayOfWeek, List<TimeOnly> Time)
         {
-            if (this.when_is_scheduled.ContainsKey(day_of_week))
+            if (this._whenIsScheduled.ContainsKey(DayOfWeek))
             {
-                foreach (var t in time)
+                foreach (var t in Time)
                 {
-                    this.when_is_scheduled[day_of_week].Remove(t);
+                    this._whenIsScheduled[DayOfWeek].Remove(t);
                 }
             }
             else
             {
-                throw new ArgumentException("Invalid day of the week.");
+                throw new ArgumentException("Invalid day of the week.");  // надо как-то поменять 
             }
         }
 
@@ -86,104 +85,132 @@ namespace class_project_ieradumi
 
 
 
-    internal class schedule
+    public class Schedule
     {
-        private string ID;
-        private string user_ID;
-        private bool archived;
-        private List<scheduled_habits> scheduled_habits;
-        private DateTime schedule_creation_date;
-        private DateTime schedule_last_change_date;
+        private string _ID;
+        public string ID { 
+            get => _ID; 
+            set 
+            { 
+                _ID = value;
+                _scheduleLastChangeDate = DateTime.Now;
+            } 
+        }
 
-        public schedule(string ID, string user_ID, bool archived, List<scheduled_habits> scheduled_habits, DateTime schedule_creation_date, DateTime schedule_last_change_date) // Constructor for creating object of already existing schedule
+        private string _userID;
+        public string UserID
+        {
+            get => _userID;
+            set
+            {
+                _userID = value;
+                _scheduleLastChangeDate = DateTime.Now;
+            }
+        }
+
+        private bool _archived;
+        public bool Archived
+        {
+            get => _archived;
+            set
+            {
+                _archived = value;
+                _scheduleLastChangeDate = DateTime.Now;
+            }
+        }
+
+        private List<ScheduledHabits> _scheduledHabits;
+        [Ignore]
+        public List<ScheduledHabits> ScheduledHabits
+        {
+            get => _scheduledHabits;
+            set
+            {
+                _scheduledHabits = value;
+                _scheduleLastChangeDate = DateTime.Now;
+            }
+        }
+        public string ScheduledHabitsJSON
+        {
+            get => JsonSerializer.Serialize(_scheduledHabits);
+            set => _scheduledHabits = string.IsNullOrEmpty(value)
+                ? new List<ScheduledHabits>()
+                : JsonSerializer.Deserialize<List<ScheduledHabits>>(value) ?? new List<ScheduledHabits>();
+        }
+
+        private DateTime _scheduleCreationDate;
+        public DateTime ScheduleCreationDate { get => _scheduleCreationDate; init => _scheduleCreationDate = value; }
+
+        private DateTime _scheduleLastChangeDate;
+        public DateTime ScheduleLastChangeDate { get => _scheduleLastChangeDate; set => _scheduleLastChangeDate = value; } //не использовать из вне, оставить init для того чтобы sqlite мог работать 
+
+        public Schedule()
+        {
+
+            _scheduleCreationDate = DateTime.Now;
+            _scheduleLastChangeDate = DateTime.Now;
+        }
+        public Schedule(string ID, string UserID, bool archived, List<ScheduledHabits> ScheduledHabits, DateTime ScheduleCreationDate, DateTime ScheduleLastChangeDate) // Constructor for creating object of already existing schedule
         {
             if (string.IsNullOrEmpty(ID) || ID.Length < 12 || !ID.StartsWith("schedule_ID_"))
             {
-                throw new ArgumentException("ID is not valid. It must start with 'schedule_ID_<unique_id>'.");
+                throw new ArgumentException("ID is not valid. It must start with 'schedule_ID_<unique_id>'."); // поменять 
             }
-            this.ID = ID;
-            this.user_ID = user_ID;
-            this.archived = archived;
-            this.scheduled_habits = scheduled_habits;
-            this.schedule_creation_date = schedule_creation_date;
-            this.schedule_last_change_date = schedule_last_change_date;
+            this._ID = ID;
+            this._userID = UserID;
+            this._archived = archived;
+            this._scheduledHabits = ScheduledHabits;
+            this._scheduleCreationDate = ScheduleCreationDate;
+            this._scheduleLastChangeDate = ScheduleLastChangeDate;
         }
-        public schedule(string user_ID,string habit_ID, List<TimeOnly> monday, List<TimeOnly> tuesday, List<TimeOnly> wednesday, List<TimeOnly> thursday, List<TimeOnly> friday, List<TimeOnly> saturday, List<TimeOnly> sunday) // Constructor for creating new schedule object
+        public Schedule(string UserID, string HabitID, List<TimeOnly> Monday, List<TimeOnly> Tuesday, List<TimeOnly> Wednesday, List<TimeOnly> Thursday, List<TimeOnly> Friday, List<TimeOnly> Saturday, List<TimeOnly> Sunday) // Constructor for creating new schedule object
         {
-            this.ID = program.get_unique_ID_for_schedule();
-            this.user_ID = user_ID;
-            this.archived = false;
-            this.scheduled_habits = new List<scheduled_habits>
+            this._ID = Program.GetUniqueIDForSchedule();
+            this._userID = UserID;
+            this._archived = false;
+            this._scheduledHabits = new List<ScheduledHabits>
             {
-                new scheduled_habits(habit_ID, monday, tuesday, wednesday, thursday, friday, saturday, sunday)
+                new ScheduledHabits(HabitID, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday)
             };
-            this.schedule_creation_date = DateTime.Now;
-            this.schedule_last_change_date = DateTime.Now;
-        }
-
-        // Getters for schedule class
-        public string get_ID()
-        {
-            return this.ID;
-        }
-        public string get_user_ID()
-        {
-            return this.user_ID;
-        }
-        public bool is_archived()
-        {
-            return this.archived;
-        }
-
-
-
-        // setters for schedule class
-        public void set_archived()
-        {
-            this.archived = true;
-            this.schedule_last_change_date = DateTime.Now;
-        }
-        public void set_unarchived()
-        {
-            this.archived = false;
-            this.schedule_last_change_date = DateTime.Now;
+            this._scheduleCreationDate = DateTime.Now;
+            this._scheduleLastChangeDate = DateTime.Now;
         }
 
 
         //add methods for schedule class
-        public void add_scheduled_habit(string habit_ID, List<TimeOnly> monday, List<TimeOnly> tuesday, List<TimeOnly> wednesday, List<TimeOnly> thursday, List<TimeOnly> friday, List<TimeOnly> saturday, List<TimeOnly> sunday)
+        public void AddScheduledHabit(string HabitID, List<TimeOnly> Monday, List<TimeOnly> Tuesday, List<TimeOnly> Wednesday, List<TimeOnly> Thursday, List<TimeOnly> Friday, List<TimeOnly> Saturday, List<TimeOnly> Sunday)
         {
-            if (string.IsNullOrEmpty(habit_ID) || habit_ID.Length < 12 || habit_ID.Substring(0, 12) != "habit_ID_")
+            if (string.IsNullOrEmpty(HabitID) || HabitID.Length < 12 || HabitID.Substring(0, 12) != "habit_ID_")
             {
                 throw new ArgumentException("Habit ID is not valid. It must start with 'habit_ID_<unique_id>'.");
             }
-            if (this.scheduled_habits.Exists(habit => habit.get_habit_ID() == habit_ID))
+            if (this._scheduledHabits.Exists(Habit => Habit.HabitID == HabitID))
             {
-                this.scheduled_habits.Where(habit => habit.get_habit_ID() == habit_ID).First().add_scheduled_time("Monday", monday);
-                this.scheduled_habits.Where(habit => habit.get_habit_ID() == habit_ID).First().add_scheduled_time("Tuesday", tuesday);
-                this.scheduled_habits.Where(habit => habit.get_habit_ID() == habit_ID).First().add_scheduled_time("Wednesday", wednesday);
-                this.scheduled_habits.Where(habit => habit.get_habit_ID() == habit_ID).First().add_scheduled_time("Thursday", thursday);
-                this.scheduled_habits.Where(habit => habit.get_habit_ID() == habit_ID).First().add_scheduled_time("Friday", friday);
-                this.scheduled_habits.Where(habit => habit.get_habit_ID() == habit_ID).First().add_scheduled_time("Saturday", saturday);
-                this.scheduled_habits.Where(habit => habit.get_habit_ID() == habit_ID).First().add_scheduled_time("Sunday", sunday);
-                this.schedule_last_change_date = DateTime.Now;
+                this._scheduledHabits.Where(Habit => Habit.HabitID == HabitID).First().AddScheduledTime("Monday", Monday);
+                this._scheduledHabits.Where(Habit => Habit.HabitID == HabitID).First().AddScheduledTime("Tuesday", Tuesday);
+                this._scheduledHabits.Where(Habit => Habit.HabitID == HabitID).First().AddScheduledTime("Wednesday", Wednesday);
+                this._scheduledHabits.Where(Habit => Habit.HabitID == HabitID).First().AddScheduledTime("Thursday", Thursday);
+                this._scheduledHabits.Where(Habit => Habit.HabitID == HabitID).First().AddScheduledTime("Friday", Friday);
+                this._scheduledHabits.Where(Habit => Habit.HabitID == HabitID).First().AddScheduledTime("Saturday", Saturday);
+                this._scheduledHabits.Where(Habit => Habit.HabitID == HabitID).First().AddScheduledTime("Sunday", Sunday);
+                this._scheduleLastChangeDate = DateTime.Now;
             }
             else
             {
-                this.scheduled_habits.Add(new scheduled_habits(habit_ID, monday, tuesday, wednesday, thursday, friday, saturday, sunday));
-                this.schedule_last_change_date = DateTime.Now;
+                this._scheduledHabits.Add(new ScheduledHabits(HabitID, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday));
+                this._scheduleLastChangeDate = DateTime.Now;
             }
         }
-        public void add_time_to_scheduled_habit(string habit_ID, string day_of_week, List<TimeOnly> time)
+        public void AddTimeToScheduledHabit(string HabitID, string DayOfWeek, List<TimeOnly> Time)
         {
-            if (habit_ID.Substring(0, 9) != "habit_ID_")
+            if (HabitID.Substring(0, 9) != "habit_ID_")
             {
                 throw new ArgumentException("Habit ID is not valid. It must start with 'habit_ID_<unique_id>'.");
             }
-            if (this.scheduled_habits.Exists(habit => habit.get_habit_ID() == habit_ID))
+            if (this._scheduledHabits.Exists(Habit => Habit.HabitID == HabitID))
             {
-                this.scheduled_habits.Where(habit => habit.get_habit_ID() == habit_ID).First().add_scheduled_time(day_of_week, time);
-                this.schedule_last_change_date = DateTime.Now;
+                this._scheduledHabits.Where(Habit => Habit.HabitID == HabitID).First().AddScheduledTime(DayOfWeek, Time);
+                this._scheduleLastChangeDate = DateTime.Now;
             }
             else
             {
@@ -192,32 +219,32 @@ namespace class_project_ieradumi
         }
 
         //delete methods for schedule class
-        public void remove_time_from_scheduled_habit(string habit_ID, string day_of_week, List<TimeOnly> time)
+        public void RemoveTimeFromScheduledHabit(string HabitID, string DayOfWeek, List<TimeOnly> Time)
         {
-            if (habit_ID.Substring(0, 9) != "habit_ID_")
+            if (HabitID.Substring(0, 9) != "habit_ID_")
             {
                 throw new ArgumentException("Habit ID is not valid. It must start with 'habit_ID_<unique_id>'.");
             }
-            if (this.scheduled_habits.Exists(habit => habit.get_habit_ID() == habit_ID))
+            if (this._scheduledHabits.Exists(Habit => Habit.HabitID == HabitID))
             {
-                this.scheduled_habits.Where(habit => habit.get_habit_ID() == habit_ID).First().remove_scheduled_time(day_of_week, time);
-                this.schedule_last_change_date = DateTime.Now;
+                this._scheduledHabits.Where(Habit => Habit.HabitID == HabitID).First().RemoveScheduledTime(DayOfWeek, Time);
+                this._scheduleLastChangeDate = DateTime.Now;
             }
             else
             {
                 throw new ArgumentException("Habit ID does not exist in the schedule.");
             }
         }
-        public void remove_scheduled_habit(string habit_ID)
+        public void RemoveScheduledHabit(string HabitID)
         {
-            if (habit_ID.Substring(0, 9) != "habit_ID_")
+            if (HabitID.Substring(0, 9) != "habit_ID_")
             {
                 throw new ArgumentException("Habit ID is not valid. It must start with 'habit_ID_<unique_id>'.");
             }
-            if (this.scheduled_habits.Exists(habit => habit.get_habit_ID() == habit_ID))
+            if (this._scheduledHabits.Exists(Habit => Habit.HabitID == HabitID))
             {
-                this.scheduled_habits.RemoveAll(habit => habit.get_habit_ID() == habit_ID);
-                this.schedule_last_change_date = DateTime.Now;
+                this._scheduledHabits.RemoveAll(Habit => Habit.HabitID == HabitID);
+                this._scheduleLastChangeDate = DateTime.Now;
             }
             else
             {

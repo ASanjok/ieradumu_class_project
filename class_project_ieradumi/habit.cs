@@ -1,109 +1,166 @@
 ﻿namespace class_project_ieradumi
 {
-    internal class habit
+    public class Habit
     {
-        private string ID;
-        private string habit_name;
-        private string habit_description;
-        private string author_ID;
-        private bool archived;
-        
-        private DateTime habit_creation_date;
-        private DateTime habit_last_change_date;
-        public habit(string ID, string habit_name, string habit_description, string author_ID, bool archived, DateTime habit_creation_date, DateTime habit_last_change_date) // Constructor for creating object of already existing habit
+        private string _ID;
+        public string ID{ 
+            get => _ID; 
+            set  
+            {
+                _ID = value; 
+                _habitLastChangeDate = DateTime.Now; 
+            }
+        }
+
+        private string _habitName;
+        public string HabitName
+        {
+            get => _habitName;
+            set
+            {
+                _habitName = value;
+                _habitLastChangeDate = DateTime.Now;
+            }
+        }
+
+        private string _habitDescription;
+        public string HabitDescription
+        {
+            get => _habitDescription;
+            set
+            {
+                _habitDescription = value;
+                _habitLastChangeDate = DateTime.Now;
+            }
+        }
+
+        private string _authorID;
+        public string AuthorID
+        {
+            get => _authorID;
+            set
+            {
+                _authorID = value;
+                _habitLastChangeDate = DateTime.Now;
+            }
+        }
+
+        private bool _archived;
+        public bool Archived
+        {
+            get => _archived;
+            set
+            {
+                _archived = value;
+                _habitLastChangeDate = DateTime.Now;
+            }
+        }
+
+        private DateTime _habitCreationDate;
+        public DateTime HabitCreationDate { get => _habitCreationDate; init => _habitCreationDate = value; }
+
+        private DateTime _habitLastChangeDate;
+        public DateTime HabitLastChangeDate { get => _habitCreationDate; set => _habitCreationDate = value; }
+        public Habit()
+        {
+
+            _habitCreationDate = DateTime.Now;
+            _habitLastChangeDate = DateTime.Now;
+        }
+        public Habit(string ID, string habit_name, string habit_description, string author_ID, bool archived, DateTime habit_creation_date, DateTime habit_last_change_date) // Constructor for creating object of already existing habit
         {
             string start_of_ID = ID.Substring(0, 9);
             if (start_of_ID != "habit_ID_")
             {
                 throw new ArgumentException("ID is not valid. It must start with 'habit_ID_<unique_id>'.");
             }
-            this.ID = ID;
-            this.habit_name = habit_name;
-            this.habit_description = habit_description;
-            this.author_ID = author_ID;
-            this.archived = archived;
-            this.habit_creation_date = habit_creation_date;
-            this.habit_last_change_date = habit_last_change_date;
+            this._ID = ID;
+            this._habitName = habit_name;
+            this._habitDescription = habit_description;
+            this._authorID = author_ID;
+            this._archived = archived;
+            this._habitCreationDate = habit_creation_date;
+            this._habitLastChangeDate = habit_last_change_date;
         }
-        public habit(string habit_name, string habit_description, string author_ID) // Constructor for creating new habit object
+        public Habit(string habit_name, string habit_description, string author_ID) // Constructor for creating new habit object
         {
-            this.ID = program.get_unique_ID_for_habit();
-            this.habit_name = habit_name;
-            this.habit_description = habit_description;
-            this.author_ID = author_ID;
-            this.archived = false;
-            this.habit_creation_date = DateTime.Now;
-            this.habit_last_change_date = DateTime.Now;
+            this._ID = Program.GetUniqueIdForHabit();
+            this._habitName = habit_name;
+            this._habitDescription = habit_description;
+            this._authorID = author_ID;
+            this._archived = false;
+            this._habitCreationDate = DateTime.Now;
+            this._habitLastChangeDate = DateTime.Now;
         }
 
         // Getters for habit class
-        public string get_unique_ID()
+        public string GetHabitID()
         {
-            return this.ID;
+            return this._ID;
         }
-        public string get_habit_name()
+        public string GetHabitName()
         {
-            return this.habit_name;
+            return this._habitName;
         }
-        public string get_habit_description()
+        public string GetHabitDescription()
         {
-            return this.habit_description;
+            return this._habitDescription;
         }
-        public string get_author_ID()
+        public string GetAuthorID()
         {
-            return this.author_ID;
+            return this._authorID;
         }
-        public bool is_archived()
+        public bool IsArchived()
         {
-            return this.archived;
+            return this._archived;
         }
-        public DateTime get_habit_creation_date()
+        public DateTime GetHabitCreationDate()
         {
-            return this.habit_creation_date;
+            return this._habitCreationDate;
         }
-        public DateTime get_habit_last_change_date()
+        public DateTime GetHabitLastChangeDate()
         {
-            return this.habit_last_change_date;
+            return this._habitLastChangeDate;
         }
 
 
         // setters for habit class
-        public void set_habit_name(string habit_name)
+        public void SetHabitName(string HabitName)
         {
-            if (habit_name.Length < 3 || habit_name.Length > 50)
+            if (HabitName.Length < 3 || HabitName.Length > 50)
             {
                 throw new ArgumentException("Habit name must be between 3 and 50 characters long.");
             }
-            this.habit_name = habit_name;
-            this.habit_last_change_date = DateTime.Now;
+            this._habitName = HabitName;
+            this._habitLastChangeDate = DateTime.Now;
         }
-        public void set_habit_description(string habit_description)
+        public void SetHabitDescription(string HabitDescription)
         {
-            if (habit_description.Length < 3 || habit_description.Length > 200)
+            if (HabitDescription.Length < 3 || HabitDescription.Length > 200)
             {
                 throw new ArgumentException("Habit description must be between 3 and 200 characters long.");
             }
-            this.habit_description = habit_description;
-            this.habit_last_change_date = DateTime.Now;
+            this._habitDescription = HabitDescription;
+            this._habitLastChangeDate = DateTime.Now;
         }
-        public void set_author_ID(string author_ID)
+        public void SetAuthorID(string AuthorID)
         {
-            if (author_ID.Length < 9)
+            if (AuthorID.Length < 9)
             {
                 throw new ArgumentException("Author ID must be greater than 9 characters long. \"user_ID_<unique_ID>\"");
             }
-            this.author_ID = author_ID;
-            this.habit_last_change_date = DateTime.Now;
+            this._authorID = AuthorID;
+            this._habitLastChangeDate = DateTime.Now;
         }
-        public void set_archived()
+        public void SetArchived()
         {
-            this.archived = true;
-            this.habit_last_change_date = DateTime.Now;
+            this._archived = true;
+            this._habitLastChangeDate = DateTime.Now;
         }
-        public void set_unarchived()
+        public void SetUnarchived()
         {
-            this.archived = false;
-            this.habit_last_change_date = DateTime.Now;
+            this._archived = false;
+            this._habitLastChangeDate = DateTime.Now;
         }
     }
 }

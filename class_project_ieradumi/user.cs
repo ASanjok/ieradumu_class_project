@@ -1,19 +1,72 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace class_project_ieradumi
+﻿namespace class_project_ieradumi
 {
-    internal class user
+    public class User
     {
-        private string ID;
-        private string username;
-        private string email;
-        private string password;
-        private bool archived;
-        private DateTime user_creation_date;
-        private DateTime user_last_change_date;
-        public user(string ID, string username, string email, string password, bool archived, DateTime user_creation_date, DateTime user_last_change_date) // Constructor for creating object of already existing user
+        private string _ID;
+        public string ID
+        {
+            get => _ID;
+            set => _ID = value;
+        }
+
+        private string _username;
+        public string Username { 
+            get => _username; 
+            set 
+            { 
+                _username = value; 
+                _userLastChangeDate = DateTime.Now; 
+            } 
+        }
+
+        private string _email;
+        public string Email { 
+            get => _email; 
+            set 
+            { 
+                _email = value; 
+                _userLastChangeDate = DateTime.Now; 
+            } 
+        }
+
+        private string _password;
+        public string Password { 
+            get => _password; 
+            set 
+            { 
+                _password = value; 
+                _userLastChangeDate = DateTime.Now; 
+            } 
+        }
+
+        private bool _archived = false;
+        public bool Archived { 
+            get => _archived; 
+            set 
+            { 
+                _archived = value; 
+                _userLastChangeDate = DateTime.Now; 
+            } 
+        }
+
+        private DateTime _userCreationDate;
+        public DateTime UserCreationDate { 
+            get => _userCreationDate;
+            init => _userCreationDate = value;
+        }
+
+        private DateTime _userLastChangeDate;
+        public DateTime UserLastChangeDate
+        {
+            get => _userLastChangeDate;
+            set => _userLastChangeDate = value; // неиспользовать из вне класса (нельзя убрать потому что sqlite'у нужен этот метод)
+        }
+        public User()
+        {
+            _userCreationDate = DateTime.Now;
+            _userLastChangeDate = DateTime.Now;
+        }
+        public User(string ID, string username, string email, string password, bool archived, DateTime user_creation_date, DateTime user_last_change_date) // Constructor for creating object of already existing user
         {
             string start_of_ID = ID.Substring(0, 8);
             if (start_of_ID != "user_ID_")
@@ -21,90 +74,22 @@ namespace class_project_ieradumi
                 throw new ArgumentException("ID is not valid. It must start with 'user_ID_<unique_id>'.");
             }
             this.ID = ID;
-            this.username = username;
-            this.email = email;
-            this.password = password;
-            this.archived = archived;
-            this.user_creation_date = user_creation_date;
-            this.user_last_change_date = user_last_change_date;
+            this._username = username;
+            this._email = email;
+            this._password = password;
+            this._archived = archived;
+            this._userCreationDate = user_creation_date;
+            this._userLastChangeDate = user_last_change_date;
         }
-        public user(string username, string email, string password) // Constructor for creating new user object
+        public User(string username, string email, string password) // Constructor for creating new user object
         {
-            this.ID = program.get_unique_ID_for_user();
-            this.username = username;
-            this.email = email;
-            this.password = password;
-            this.archived = false;
-            this.user_creation_date = DateTime.Now;
-            this.user_last_change_date = DateTime.Now;
-        }
-        // Getters for user class
-        public string get_ID()
-        {
-            return this.ID;
-        }
-        public string get_username()
-        {
-            return this.username;
-        }
-        public string get_email()
-        {
-            return this.email;
-        }
-        public string get_password()
-        {
-            return this.password;
-        }
-        public DateTime get_user_creation_date()
-        {
-            return this.user_creation_date;
-        }
-        public DateTime get_user_last_change_date()
-        {
-            return this.user_last_change_date;
-        }
-        public bool is_archived()
-        {
-            return this.archived;
-        }
-
-        // setters for user class
-        public void set_username(string username)
-        {
-            if(string.IsNullOrWhiteSpace(username))
-            {
-                throw new ArgumentException("Username cannot be empty or whitespace.");
-            }
-            this.username = username;
-            this.user_last_change_date = DateTime.Now;
-        }
-        public void set_email(string email)
-        {
-            if (string.IsNullOrWhiteSpace(email))
-            {
-                throw new ArgumentException("Email cannot be empty or whitespace.");
-            }
-            this.email = email;
-            this.user_last_change_date = DateTime.Now;
-        }
-        public void set_password(string password)
-        {
-            if (string.IsNullOrWhiteSpace(password))
-            {
-                throw new ArgumentException("Password cannot be empty or whitespace.");
-            }
-            this.password = password;
-            this.user_last_change_date = DateTime.Now;
-        }
-        public void set_archived()
-        {
-            this.archived = true;
-            this.user_last_change_date = DateTime.Now;
-        }
-        public void set_unarchived()
-        {
-            this.archived = false;
-            this.user_last_change_date = DateTime.Now;
+            this.ID = Program.GetUniqueIDForUser();
+            this._username = username;
+            this._email = email;
+            this._password = password;
+            this._archived = false;
+            this._userCreationDate = DateTime.Now;
+            this._userLastChangeDate = DateTime.Now;
         }
     }
 }
