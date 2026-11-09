@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Shell x:Class="maui_app_ieradumi.AppShell"
+       xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+       xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+       xmlns:local="clr-namespace:maui_app_ieradumi"
+       Title="maui_app_ieradumi">
+    <FlyoutItem Title="Логин"
+                FlyoutItemIsVisible="False">
+        <ShellContent Title="Login"
+                      ContentTemplate="{DataTemplate local:LoginPage}"
+                      Route="LoginPage" />
+    </FlyoutItem>
+
+    <!--<ShellContent Title="Calendar"
+                  ContentTemplate="{DataTemplate local:CalendarPage}"
+                  Route="CalendarPage" />
+
+    <ShellContent Title="Create ieradumu"
+                  ContentTemplate="{DataTemplate local:CreateIeradumuPage}"
+                  Route="CreateIeradumuPage" />
+
+    <ShellContent Title="update ieradumu"
+                  ContentTemplate="{DataTemplate local:UpdateIeradumuPage}"
+                  Route="UpdateIeradumuPage" />
+
+    <ShellContent Title="Calendar Change"
+                  ContentTemplate="{DataTemplate local:CalendarChangePage}"
+                  Route="CalendarChangePage" />-->
+
+    <ShellContent Title="Home"
+                  ContentTemplate="{DataTemplate local:MainPage}"
+                  Route="MainPage" />
+
+</Shell>

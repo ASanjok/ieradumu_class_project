@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="maui_app_ieradumi.LoginPage"
+             Title="LoginPage">
+    <VerticalStackLayout Padding="20">
+        <Label Text="{Binding TopText}"
+            VerticalOptions="Center" 
+            HorizontalOptions="Center" 
+            FontSize="32" />
+        <Entry Placeholder="Username" Text ="{Binding UserName}"/>
+        <Entry Placeholder="Password" Text="{Binding Password}"
+               IsPassword="True" />
+        <Button Text="{Binding EnterButtonText}"
+                Command="{Binding EnterButtonCommand}" />
+        <Button Text="{Binding SwitchButtonText}"
+                Command="{Binding SwitchButtonCommand}" />
+    </VerticalStackLayout>
+</ContentPage>
