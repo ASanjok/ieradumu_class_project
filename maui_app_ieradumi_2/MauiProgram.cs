@@ -23,8 +23,11 @@ namespace maui_app_ieradumi_2
             builder.Services.AddSingleton<IDataService, DataService>();
 
             builder.Services.AddTransient<AuthViewModel>();
+            builder.Services.AddTransient<HabitListViewModel>();
 
             builder.Services.AddTransient<AuthPage>();
+            builder.Services.AddTransient<HabitListPage>();
+            builder.Services.AddTransient<Views.Elements.HabitInfoElement>();
             //-----------------------------------------------------------------
 
 #if DEBUG

@@ -6,5 +6,11 @@
         {
             InitializeComponent();
         }
+        private async void OnLogoutClicked(object sender, EventArgs e)
+        {
+            SecureStorage.Remove("LoggedInUserID");
+            await Shell.Current.GoToAsync("//AuthPage");
+            Shell.Current.FlyoutIsPresented = false; // Close the flyout after logout
+        }
     }
 }

@@ -6,7 +6,7 @@
         public string ID
         {
             get => _ID;
-            set => _ID = "user_ID_" + value;
+            set => _ID = value;
         }
 
         private string _username;

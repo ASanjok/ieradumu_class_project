@@ -7,11 +7,16 @@
     xmlns:views ="clr-namespace:maui_app_ieradumi_2.Views"
     Title="maui_app_ieradumi_2">
 
-    <FlyoutItem Title="Login"
+    <FlyoutItem Title="Auth"
                 FlyoutItemIsVisible="False">
         <ShellContent Title="Auth Page"
                       ContentTemplate="{DataTemplate views:AuthPage}"
                       Route="AuthPage" />
     </FlyoutItem>
-
+    <ShellContent Title="Ieradumu saraksts"
+                  ContentTemplate="{DataTemplate views:HabitListPage}"
+                  Route="HabitListPage" />
+    <MenuItem Text="logout"
+              Clicked="OnLogoutClicked"
+              IconImageSource="logout_icon.png"/>
 </Shell>

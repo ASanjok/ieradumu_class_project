@@ -82,7 +82,7 @@ namespace maui_app_ieradumi_2.ViewModels
                 bool success = await _dataService.LoginAsync(UserName, Password);
                 if (success)
                 {
-                    //await Shell.Current.GoToAsync("//MainPage");
+                    await Shell.Current.GoToAsync("//HabitListPage");
                     TopText = "correct!!!";
                 }
                 else
@@ -107,10 +107,11 @@ namespace maui_app_ieradumi_2.ViewModels
             }
             if (allowed)
             {
-                bool success = await _dataService.RegisterAsync(UserName, Password);
+                await _dataService.RegisterAsync(UserName, Password);
+                bool success = await _dataService.LoginAsync(UserName, Password);
                 if (success)
                 {
-                    //await Shell.Current.GoToAsync("//MainPage");
+                    await Shell.Current.GoToAsync("//HabitListPage");
                     TopText = "Registered!!!";
                 }
                 else
