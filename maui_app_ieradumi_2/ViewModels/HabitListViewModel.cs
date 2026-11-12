@@ -1,7 +1,9 @@
 ﻿using class_project_ieradumi;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using CommunityToolkit.Mvvm.Messaging;
 using maui_app_ieradumi_2.Views;
+using maui_app_ieradumi_2.Views.Elements;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -20,11 +22,27 @@ namespace maui_app_ieradumi_2.ViewModels
         public HabitListViewModel(Services.IDataService dataService)
         {
             _dataService = dataService;
+
+            WeakReferenceMessenger.Default.Register<DeleteHabitMessage>(this, async (recipient, message) => // подписка на ожидание сообщения о удалении привычки 
+            {
+                var habit = message.Value;
+                await _dataService.DeleteHabitAsync(habit.ID);
+
+                if (Habits.Contains(habit))
+                {
+                    Habits.Remove(habit);
+                }
+            });
+
+            WeakReferenceMessenger.Default.Register<EditHabitMessage>(this, async (recipient, message) =>
+            {
+                var habit = message.Value;
+                await Shell.Current.GoToAsync($"EditHabitPage?habitId={habit.ID}");
+            });
         }
         public async Task LoadHabitsAsync()
         {
             System.Diagnostics.Debug.WriteLine("запусщена фукнция LoadHabitsAsync");
-            if (Habits.Count > 0) return;
 
             var userId = await SecureStorage.GetAsync("LoggedInUserID");
 
@@ -80,6 +98,24 @@ namespace maui_app_ieradumi_2.ViewModels
             if (habit == null) return;
             await Shell.Current.GoToAsync("//EditHabitPage?habitId=" + habit.ID);
 
+        }
+
+        [RelayCommand]
+        private async Task DeleteHabitButton(Habit habit)
+        {
+            System.Diagnostics.Debug.WriteLine("запущена DeleteHabitButtonCommand");
+            if (habit == null) return;
+
+            await _dataService.DeleteHabitAsync(habit.ID);
+
+            MainThread.BeginInvokeOnMainThread(() =>
+            {
+                if (Habits.Contains(habit))
+                {
+                    Habits.Remove(habit);
+                    System.Diagnostics.Debug.WriteLine("Привычка успешно удалена с экрана");
+                }
+            });
         }
     }
 }

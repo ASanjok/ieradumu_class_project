@@ -166,6 +166,20 @@ namespace maui_app_ieradumi_2.Services
                 }
             }
         }
+        public async Task DeleteHabitAsync(string habitId)
+        {
+            System.Diagnostics.Debug.WriteLine("запущена функция Delete habit async");
+            if (!string.IsNullOrEmpty(habitId))
+            {
+                var existingHabit = await _connection.FindAsync<Habit>(habitId);
+
+                if (existingHabit != null)
+                {
+                    await _connection.DeleteAsync(existingHabit);
+                    System.Diagnostics.Debug.WriteLine("Привычка успешно удалена из базы");
+                }
+            }
+        }
     }
 }
         
