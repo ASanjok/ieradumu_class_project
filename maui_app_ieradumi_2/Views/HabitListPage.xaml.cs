@@ -5,7 +5,7 @@ namespace maui_app_ieradumi_2.Views;
 public partial class HabitListPage : ContentPage
 {
     private readonly HabitListViewModel _viewModel;
-    public HabitListPage(ViewModels.HabitListViewModel viewModel)
+    public HabitListPage(HabitListViewModel viewModel)
 	{
 		InitializeComponent();
         _viewModel = viewModel;

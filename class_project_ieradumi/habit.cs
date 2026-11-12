@@ -1,8 +1,11 @@
-﻿namespace class_project_ieradumi
+﻿using SQLite;
+
+namespace class_project_ieradumi
 {
     public class Habit
     {
         private string _ID;
+        [PrimaryKey]
         public string ID{ 
             get => _ID; 
             set  

@@ -1,10 +1,11 @@
-﻿using System;
+﻿using class_project_ieradumi;
+using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
+using maui_app_ieradumi_2.Views;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Text;
-using class_project_ieradumi;
-using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm.Input;
 
 namespace maui_app_ieradumi_2.ViewModels
 {
@@ -30,7 +31,7 @@ namespace maui_app_ieradumi_2.ViewModels
             System.Diagnostics.Debug.WriteLine("залогинен ID = "+userId);
             if (!string.IsNullOrEmpty(userId))
             {
-                var habits = await _dataService.GetHabitList(userId);
+                var habits = await _dataService.GetHabitListAsync(userId);
                 Habits.Clear();
                 foreach (var habit in habits)
                 {
@@ -46,6 +47,39 @@ namespace maui_app_ieradumi_2.ViewModels
         {
             System.Diagnostics.Debug.WriteLine("запусщена фукнция RefreshButton");
             await LoadHabitsAsync();
+        }
+
+
+        // create form for creating new habit
+        [ObservableProperty]
+        private string newHabitName = "";
+        [ObservableProperty]
+        private string newHabitDescription = "";
+
+        [RelayCommand]
+        private async Task AddHabit()
+        {
+            System.Diagnostics.Debug.WriteLine("запусщена фукнция AddHabit");
+            var userId = await SecureStorage.GetAsync("LoggedInUserID");
+            if (!string.IsNullOrEmpty(userId))
+            {
+                
+                await _dataService.SaveHabitAsync(NewHabitName, NewHabitDescription);
+                await LoadHabitsAsync();
+                System.Diagnostics.Debug.WriteLine("новый привычка добавлена в коллекцию");
+            }
+        }
+
+
+
+
+        [RelayCommand]
+        private async Task EditHabitButton(Habit habit)
+        {
+            System.Diagnostics.Debug.WriteLine("запусчена EditHabitButtonCommand");
+            if (habit == null) return;
+            await Shell.Current.GoToAsync("//EditHabitPage?habitId=" + habit.ID);
+
         }
     }
 }

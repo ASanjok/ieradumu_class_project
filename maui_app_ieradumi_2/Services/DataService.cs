@@ -120,11 +120,20 @@ namespace maui_app_ieradumi_2.Services
                         HabitDescription = description,
                         AuthorID = loggedInUser,
                     };
+                    await _connection.InsertAsync(newHabit);
 
                 }
             }
         }
-        public async Task<List<Habit>> GetHabitList(string userId)
+        public async Task SaveHabitAsync(Habit habit)
+        {
+            if (habit != null)
+            {
+                await _connection.InsertAsync(habit);
+
+            }
+        }
+        public async Task<List<Habit>> GetHabitListAsync(string userId)
         {
             if (!string.IsNullOrEmpty(userId))
             {
@@ -133,5 +142,31 @@ namespace maui_app_ieradumi_2.Services
             }
             return new List<Habit>();
         }
+        public async Task<Habit?> GetHabitAsync(string habitId)
+        {
+            if (!string.IsNullOrEmpty(habitId))
+            {
+                Habit habit = await _connection.FindAsync<Habit>(h => h.ID == habitId);
+                return habit;
+            }
+            return null;
+        }
+        public async Task EditHabitAsync(string ID, Habit habit)
+        {
+            if (!string.IsNullOrEmpty(ID) && habit != null)
+            {
+                var existingHabit = _connection.FindAsync<Habit>(h => h.ID == ID).Result;
+                if (existingHabit != null)
+                {
+                    existingHabit.HabitName = habit.HabitName;
+                    existingHabit.HabitDescription = habit.HabitDescription;
+                    existingHabit.Archived = habit.Archived;
+                    existingHabit.HabitLastChangeDate = DateTime.Now;
+                    _connection.UpdateAsync(existingHabit);
+                }
+            }
+        }
     }
 }
+        
+

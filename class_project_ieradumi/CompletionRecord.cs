@@ -8,6 +8,7 @@ namespace class_project_ieradumi
 {
     public class CompletionRecord
     {
+        [PrimaryKey]
         public string ID { 
             get; 
             set 

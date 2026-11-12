@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="maui_app_ieradumi_2.Views.Elements.HabitInfoElement">
+             x:Class="maui_app_ieradumi_2.Views.Elements.HabitInfoElement"
+             xmlns:viewmodels="clr-namespace:maui_app_ieradumi_2.ViewModels">
     <Border StrokeThickness="0"
             Stroke="Transparent"
             HorizontalOptions="Center"
@@ -40,7 +41,9 @@
                    VerticalOptions="Center"
                    HorizontalOptions="Center" />
             <Button Text="edit"
-                    Margin="5,15"></Button>
+                    Margin="5,15"
+                    Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodels:HabitListViewModel}}, Path=EditHabitButtonCommand}"
+                    CommandParameter="{Binding .}" />
             <Button Text="delete"
                     Margin="5,15"></Button>
         </HorizontalStackLayout>

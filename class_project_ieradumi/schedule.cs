@@ -88,6 +88,7 @@ namespace class_project_ieradumi
     public class Schedule
     {
         private string _ID;
+        [PrimaryKey]
         public string ID { 
             get => _ID; 
             set 
