@@ -21,11 +21,11 @@ public partial class HabitInfoElement : ContentView
     {
         if (BindingContext is Habit habit)
         {
-            WeakReferenceMessenger.Default.Send(new DeleteHabitMessage(habit)); // отпровляет сообщение о удалении привычки 
+            WeakReferenceMessenger.Default.Send(new DeleteHabitMessage(habit)); // отпровляет сообщение о удалении привычки (habbitListViewModel.cs)
         }
     }
 }
-public class DeleteHabitMessage : CommunityToolkit.Mvvm.Messaging.Messages.ValueChangedMessage<Habit> // само сообщение о удалении привычки
+public class DeleteHabitMessage : CommunityToolkit.Mvvm.Messaging.Messages.ValueChangedMessage<Habit> // само сообщение о удалении привычки (habbitListViewModel.cs)
 {
     public DeleteHabitMessage(Habit habit) : base(habit) { }
 }

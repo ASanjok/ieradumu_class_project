@@ -23,7 +23,7 @@ namespace maui_app_ieradumi_2.ViewModels
         {
             _dataService = dataService;
 
-            WeakReferenceMessenger.Default.Register<DeleteHabitMessage>(this, async (recipient, message) => // подписка на ожидание сообщения о удалении привычки 
+            WeakReferenceMessenger.Default.Register<DeleteHabitMessage>(this, async (recipient, message) => // подписка на ожидание сообщения о удалении привычки (habitinfoelement.xaml.cs)
             {
                 var habit = message.Value;
                 await _dataService.DeleteHabitAsync(habit.ID);
