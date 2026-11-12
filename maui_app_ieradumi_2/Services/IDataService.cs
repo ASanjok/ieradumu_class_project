@@ -15,6 +15,7 @@ namespace maui_app_ieradumi_2.Services
         Task EditHabitAsync(string ID,Habit habit);
         Task<Habit?> GetHabitAsync(string habitId);
         Task DeleteHabitAsync(string habitId);
-
+        Task<User?> GetUserByIdAsync(string userId);
+        Task UpdateUserAsync(User user);
     }
 }

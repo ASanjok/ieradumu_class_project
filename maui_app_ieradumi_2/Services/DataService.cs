@@ -180,6 +180,22 @@ namespace maui_app_ieradumi_2.Services
                 }
             }
         }
+        public async Task<User?> GetUserByIdAsync(string userId)
+        {
+            if (!string.IsNullOrEmpty(userId))
+            {
+                User user = await _connection.FindAsync<User>(u => u.ID == userId);
+                return user;
+            }
+            return null;
+        }
+        public async Task UpdateUserAsync(User user)
+        {
+            if (user != null)
+            {
+                await _connection.UpdateAsync(user);
+            }
+        }
     }
 }
         

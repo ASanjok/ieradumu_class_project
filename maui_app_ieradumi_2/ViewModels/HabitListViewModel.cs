@@ -37,7 +37,7 @@ namespace maui_app_ieradumi_2.ViewModels
             WeakReferenceMessenger.Default.Register<EditHabitMessage>(this, async (recipient, message) =>
             {
                 var habit = message.Value;
-                await Shell.Current.GoToAsync($"EditHabitPage?habitId={habit.ID}");
+                await EditHabitButton(habit);
             });
         }
         public async Task LoadHabitsAsync()

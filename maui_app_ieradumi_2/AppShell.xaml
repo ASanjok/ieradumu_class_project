@@ -19,6 +19,9 @@
     <ShellContent Title="Ieradumu rediģēšana"
                   ContentTemplate="{DataTemplate views:EditHabitPage}"
                   Route="EditHabitPage" />
+    <ShellContent Title="User Info"
+                  ContentTemplate="{DataTemplate views:UserInfoPage}"
+                  Route="UserInfoPage" />
     <MenuItem Text="logout"
               Clicked="OnLogoutClicked"
               IconImageSource="logout_icon.png"/>
