@@ -7,52 +7,94 @@
         <VerticalStackLayout Padding="20"
                              Spacing="15">
 
-            <VerticalStackLayout Spacing="5">
-                <Label Text="ID:"
+            <VerticalStackLayout Spacing="10"
+                                 IsVisible="{Binding IsSearchVisible}">
+
+                <Label Text="Find habit to edit:"
                        FontAttributes="Bold"
-                       TextColor="Gray" />
-                <Entry Text="{Binding CurrentHabit.ID}"
-                       IsReadOnly="True"
-                       BackgroundColor="#F0F0F0" />
+                       FontSize="16" />
+
+                <SearchBar Text="{Binding SearchQuery}"
+                           Placeholder="Type habit name..."
+                           CancelButtonColor="Red" />
+
+                <CollectionView ItemsSource="{Binding SearchResults}"
+                                SelectionMode="Single"
+                                SelectedItem="{Binding SelectedSearchHabit}"
+                                MaximumHeightRequest="250">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <Border Margin="0,5"
+                                    Padding="15"
+                                    Stroke="LightGray"
+                                    StrokeThickness="1">
+                                <Border.StrokeShape>
+                                    <RoundRectangle CornerRadius="8" />
+                                </Border.StrokeShape>
+
+                                <Label Text="{Binding HabitName}"
+                                       FontSize="16" />
+                            </Border>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+
             </VerticalStackLayout>
+            <VerticalStackLayout Spacing="15"
+                                 IsVisible="{Binding IsFormVisible}">
 
-            <VerticalStackLayout Spacing="5">
-                <Label Text="Habit Name:"
-                       FontAttributes="Bold" />
-                <Entry Text="{Binding CurrentHabit.HabitName}"
-                       Placeholder="enter habit name" />
+                <VerticalStackLayout Spacing="5">
+                    <Label Text="ID:"
+                           FontAttributes="Bold"
+                           TextColor="Gray" />
+                    <Entry Text="{Binding CurrentHabit.ID}"
+                           IsReadOnly="True"
+                           BackgroundColor="#F0F0F0" />
+                </VerticalStackLayout>
+
+                <VerticalStackLayout Spacing="5">
+                    <Label Text="Habit Name:"
+                           FontAttributes="Bold" />
+                    <Entry Text="{Binding CurrentHabit.HabitName}"
+                           Placeholder="enter habit name" />
+                </VerticalStackLayout>
+
+                <VerticalStackLayout Spacing="5">
+                    <Label Text="Habit Description:"
+                           FontAttributes="Bold" />
+                    <Entry Text="{Binding CurrentHabit.HabitDescription}"
+                           Placeholder="enter habit description" />
+                </VerticalStackLayout>
+
+                <HorizontalStackLayout Spacing="10"
+                                       VerticalOptions="Center">
+                    <Label Text="Archived"
+                           VerticalOptions="Center" />
+                    <CheckBox IsChecked="{Binding CurrentHabit.Archived}" />
+                </HorizontalStackLayout>
+
+                <HorizontalStackLayout Spacing="10">
+                    <Label Text="Creation Date:"
+                           FontAttributes="Bold" />
+                    <Label Text="{Binding CurrentHabit.HabitCreationDate}" />
+                </HorizontalStackLayout>
+
+                <HorizontalStackLayout Spacing="10">
+                    <Label Text="Last Change Date:"
+                           FontAttributes="Bold" />
+                    <Label Text="{Binding CurrentHabit.HabitLastChangeDate}" />
+                </HorizontalStackLayout>
+
+                <Button Text="Save"
+                        Command="{Binding SaveButtonCommand}"
+                        Margin="0,20,0,0"
+                        HeightRequest="45" />
+                <Button Text="Close"
+                        Command="{Binding CloseButtonCommand}"
+                        Margin="0,20,0,0"
+                        HeightRequest="45" />
+
             </VerticalStackLayout>
-            
-            <VerticalStackLayout Spacing="5">
-                <Label Text="Habit Description:"
-                       FontAttributes="Bold" />
-                <Entry Text="{Binding CurrentHabit.HabitDescription}"
-                       Placeholder="enter habit description" />
-            </VerticalStackLayout>
-
-            <HorizontalStackLayout Spacing="10"
-                                   VerticalOptions="Center">
-                <Label Text="Archived"
-                       VerticalOptions="Center" />
-                <CheckBox IsChecked="{Binding CurrentHabit.Archived}" />
-            </HorizontalStackLayout>
-
-            <HorizontalStackLayout Spacing="10">
-                <Label Text="Creation Date:"
-                       FontAttributes="Bold" />
-                <Label Text="{Binding CurrentHabit.CreationDate}" />
-            </HorizontalStackLayout>
-
-            <HorizontalStackLayout Spacing="10">
-                <Label Text="Last Change Date:"
-                       FontAttributes="Bold" />
-                <Label Text="{Binding CurrentHabit.LastChangeDate}" />
-            </HorizontalStackLayout>
-
-            <Button Text="Save"
-                    Command="{Binding SaveButtonCommand}"
-                    Margin="0,20,0,0"
-                    HeightRequest="45" />
 
         </VerticalStackLayout>
     </ScrollView>

@@ -13,16 +13,37 @@
                       ContentTemplate="{DataTemplate views:AuthPage}"
                       Route="AuthPage" />
     </FlyoutItem>
-    <ShellContent Title="Ieradumu saraksts"
+    <FlyoutItem Title="Habit">
+        <ShellContent Title="List"
                   ContentTemplate="{DataTemplate views:HabitListPage}"
                   Route="HabitListPage" />
-    <ShellContent Title="Ieradumu rediģēšana"
+        <ShellContent Title="Edit"
                   ContentTemplate="{DataTemplate views:EditHabitPage}"
                   Route="EditHabitPage" />
+        <ShellContent Title="create"
+                  ContentTemplate="{DataTemplate views:AddHabitPage}"
+                  Route="AddHabitPage" />
+    </FlyoutItem>
     <ShellContent Title="User Info"
                   ContentTemplate="{DataTemplate views:UserInfoPage}"
                   Route="UserInfoPage" />
-    <MenuItem Text="logout"
-              Clicked="OnLogoutClicked"
-              IconImageSource="logout_icon.png"/>
+    <Shell.FlyoutFooter>
+        <VerticalStackLayout Padding="20">
+            <HorizontalStackLayout Spacing="15"
+                                   VerticalOptions="Center">
+
+                <HorizontalStackLayout.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnLogoutClicked" />
+                </HorizontalStackLayout.GestureRecognizers>
+
+                <Image Source="logout_icon.png"
+                       HeightRequest="24"
+                       WidthRequest="24" />
+
+                <Label Text="Logout"
+                       VerticalOptions="Center"
+                       FontSize="16" />
+            </HorizontalStackLayout>
+        </VerticalStackLayout>
+    </Shell.FlyoutFooter>
 </Shell>

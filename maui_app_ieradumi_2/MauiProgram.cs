@@ -25,11 +25,13 @@ namespace maui_app_ieradumi_2
             builder.Services.AddTransient<AuthViewModel>();
             builder.Services.AddTransient<HabitListViewModel>();
             builder.Services.AddTransient<EditHabitViewModel>();
+            builder.Services.AddTransient<AddHabitViewModel>();
             builder.Services.AddTransient<UserInfoViewModel>();
 
             builder.Services.AddTransient<AuthPage>();
             builder.Services.AddTransient<HabitListPage>();
             builder.Services.AddTransient<EditHabitPage>();
+            builder.Services.AddTransient<AddHabitPage>();
             builder.Services.AddTransient<UserInfoPage>();
 
             builder.Services.AddTransient<Views.Elements.HabitInfoElement>();

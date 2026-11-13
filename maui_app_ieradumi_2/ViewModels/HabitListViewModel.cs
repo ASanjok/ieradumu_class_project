@@ -117,5 +117,14 @@ namespace maui_app_ieradumi_2.ViewModels
                 }
             });
         }
+
+        [ObservableProperty]
+        private string addHabitButtonText = "Pievienot ieradumu";
+        [RelayCommand]
+        private async Task AddHabitButton()
+        {
+            System.Diagnostics.Debug.WriteLine("запусчена AddHabitButtonCommand");
+            await Shell.Current.GoToAsync("//AddHabitPage");
+        }
     }
 }

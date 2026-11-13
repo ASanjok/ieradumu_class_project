@@ -106,7 +106,7 @@ namespace maui_app_ieradumi_2.Services
             }
             return false;
         }
-        public async Task SaveHabitAsync(string name, string description)
+        public async Task SaveHabitAsync(string name, string description, bool archived = false)
         {
             if (!string.IsNullOrEmpty(name) && !string.IsNullOrEmpty(description))
             {
@@ -119,6 +119,7 @@ namespace maui_app_ieradumi_2.Services
                         HabitName = name,
                         HabitDescription = description,
                         AuthorID = loggedInUser,
+                        Archived = archived,
                     };
                     await _connection.InsertAsync(newHabit);
 
