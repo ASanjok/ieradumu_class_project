@@ -8,8 +8,8 @@ public partial class UserInfoPage : ContentPage
 	public UserInfoPage(UserInfoViewModel viewmodel)
 	{
 		InitializeComponent();
-		_viewmodel = viewmodel;
-		BindingContext = _viewmodel;
+		_viewmodel = viewmodel; // переменная нужна для того чтобы использовать данные пользователя в методе OnAppearing, а также для привязки данных к интерфейсу
+        BindingContext = _viewmodel;
 	}
     protected override async void OnAppearing()
     {

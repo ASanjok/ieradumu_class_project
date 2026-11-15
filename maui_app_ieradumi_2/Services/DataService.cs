@@ -253,6 +253,31 @@ namespace maui_app_ieradumi_2.Services
                 }
             }
         }
+
+        public async Task SoftDeleteHabitScheduleAsync(string scheduleId, string habitId, string dayOfWeek, TimeSpan scheduledTime)
+        {
+            if (string.IsNullOrEmpty(scheduleId) || string.IsNullOrEmpty(habitId)) return;
+
+            // Ищем конкретную активную запись в таблице HabitSchedule
+            var targetRecord = await _connection.Table<HabitSchedule>()
+                .Where(hs => hs.ScheduleID == scheduleId &&
+                             hs.HabitID == habitId &&
+                             hs.DayOfWeek == dayOfWeek &&
+                             hs.ScheduledTime == scheduledTime &&
+                             hs.DeletedAt == null)
+                .FirstOrDefaultAsync();
+
+            if (targetRecord != null)
+            {
+                // Выполняем мягкое удаление
+                targetRecord.DeletedAt = DateTime.Now;
+
+                // Обновляем запись в базе данных
+                await _connection.UpdateAsync(targetRecord);
+
+                System.Diagnostics.Debug.WriteLine($"[DataService] HabitSchedule {targetRecord.ID} успешно помечен как удаленный (DeletedAt).");
+            }
+        }
     }
 }
 

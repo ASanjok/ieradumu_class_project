@@ -12,7 +12,6 @@
           Margin="15"
           RowSpacing="15">
 
-        <!-- Выбор даты для проверки -->
         <VerticalStackLayout Grid.Row="0"
                              Spacing="5"
                              HorizontalOptions="Center">
@@ -26,7 +25,6 @@
                         FontAttributes="Bold" />
         </VerticalStackLayout>
 
-        <!-- Список привычек за выбранный день -->
         <CollectionView Grid.Row="1"
                         ItemsSource="{Binding TasksList}">
             <CollectionView.ItemTemplate>
@@ -42,20 +40,17 @@
 
                         <Grid ColumnDefinitions="Auto, *, Auto, Auto"
                               ColumnSpacing="10">
-                            <!-- Время -->
                             <Label Text="{Binding ScheduledTime, StringFormat='{0:HH\\:mm}'}"
                                    VerticalOptions="Center"
                                    FontSize="16"
                                    FontAttributes="Bold" />
 
-                            <!-- Название привычки -->
                             <Label Text="{Binding HabitName}"
                                    Grid.Column="1"
                                    VerticalOptions="Center"
                                    FontSize="16"
                                    TextColor="#1E293B" />
 
-                            <!-- Текстовый индикатор статуса -->
                             <Label Text="{Binding Status}"
                                    Grid.Column="2"
                                    VerticalOptions="Center"
@@ -67,7 +62,7 @@
                                         <Setter Property="TextColor"
                                                 Value="Green" />
                                         <Setter Property="Text"
-                                                Value="✔ Выполнено" />
+                                                Value="Выполнено" />
                                     </DataTrigger>
                                     <DataTrigger TargetType="Label"
                                                  Binding="{Binding Status}"
@@ -75,7 +70,7 @@
                                         <Setter Property="TextColor"
                                                 Value="Red" />
                                         <Setter Property="Text"
-                                                Value="❌ Пропущено" />
+                                                Value="Пропущено" />
                                     </DataTrigger>
                                     <DataTrigger TargetType="Label"
                                                  Binding="{Binding Status}"
@@ -83,12 +78,11 @@
                                         <Setter Property="TextColor"
                                                 Value="Orange" />
                                         <Setter Property="Text"
-                                                Value="⏳ Ожидается" />
+                                                Value="Ожидается" />
                                     </DataTrigger>
                                 </Label.Triggers>
                             </Label>
 
-                            <!-- Кнопка "Выполнить" (активна, если еще не выполнено) -->
                             <Button Text="✔"
                                     Grid.Column="3"
                                     Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodels:CompletionViewModel}}, Path=CompleteTaskCommand}"
@@ -111,7 +105,7 @@
             </CollectionView.ItemTemplate>
 
             <CollectionView.EmptyView>
-                <Label Text="На выбранную дату привычек не было 🎉"
+                <Label Text="На выбранную дату привычек не было"
                        HorizontalOptions="Center"
                        VerticalOptions="Center"
                        TextColor="Gray"

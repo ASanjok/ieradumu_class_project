@@ -11,7 +11,7 @@ public partial class EditHabitPage : ContentPage
     public EditHabitPage(EditHabitViewModel viewModel)
 	{
 		InitializeComponent();
-        _viewModel = viewModel;
+        _viewModel = viewModel; //переменная нужна для того чтобы можно было вызвать метод LoadHabitAsync() в OnAppearing()
         BindingContext = _viewModel;
     }
     protected override async void OnAppearing()

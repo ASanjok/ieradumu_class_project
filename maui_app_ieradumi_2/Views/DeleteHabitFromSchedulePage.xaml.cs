@@ -10,6 +10,6 @@ public partial class DeleteHabitFromSchedulePage : ContentPage
     protected override async void OnAppearing()
     {
         base.OnAppearing();
-        await Shell.Current.GoToAsync($"//SchedulePage");
+        await Shell.Current.GoToAsync($"//SchedulePage"); // функция возвращающая на страницу расписания после удаления привычки из расписания
     }
 }

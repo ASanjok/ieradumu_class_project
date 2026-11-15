@@ -17,7 +17,7 @@ namespace maui_app_ieradumi_2.ViewModels
         {
             _dataService = dataService;
         }
-        public async Task LoadUserAsync()
+        public async Task LoadUserAsync() // Метод для загрузки информации о пользователе
         {
             System.Diagnostics.Debug.WriteLine("Запущена функция LoadUserAsync");
 
@@ -31,7 +31,7 @@ namespace maui_app_ieradumi_2.ViewModels
         }
 
         [RelayCommand]
-        private async Task SaveUser()
+        private async Task SaveUser() // Метод для сохранения изменений информации о пользователе
         {
             System.Diagnostics.Debug.WriteLine("Запущена команда SaveUser");
 

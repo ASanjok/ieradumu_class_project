@@ -14,6 +14,7 @@ namespace maui_app_ieradumi_2
             return new Window(new AppShell());
         }
 
+        // фукнция проверки есть ли залогиненный пользователь и если есть то пропускает страницу авторизации
         protected override async void OnStart()
         {
             base.OnStart();

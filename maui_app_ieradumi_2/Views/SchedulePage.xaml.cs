@@ -8,7 +8,7 @@ public partial class SchedulePage : ContentPage
     public SchedulePage(ScheduleViewModel viewmodel)
 	{
 		InitializeComponent();
-		_viewModel = viewmodel;
+		_viewModel = viewmodel; // переменная нужна для того чтобы при открытии страницы SchedulePage вызывался метод LoadScheduleAsync() из ScheduleViewModel
         BindingContext = _viewModel;
     }
     protected override async void OnAppearing()

@@ -22,9 +22,9 @@ namespace maui_app_ieradumi_2.ViewModels
             _dataService = dataService;
         }
 
-        public async Task LoadScheduleAsync()
+        public async Task LoadScheduleAsync() // метод для загрузки schedule и HabitSchedule
         {
-            var userId = await Microsoft.Maui.Storage.SecureStorage.GetAsync("LoggedInUserID");
+            var userId = await SecureStorage.GetAsync("LoggedInUserID");
             System.Diagnostics.Debug.WriteLine($"LoadScheduleAsync: Загрузка для пользователя {userId}");
 
             if (!string.IsNullOrEmpty(userId))
@@ -43,92 +43,80 @@ namespace maui_app_ieradumi_2.ViewModels
         [ObservableProperty]
         private ObservableCollection<DayScheduleGroup> daysOfWeek = new();
 
-        private async void RebuildDaysList()
+        private async void RebuildDaysList() // метод для перестройки списка дней недели с привязанными привычками
         {
-            try
+            System.Diagnostics.Debug.WriteLine("\tRebuildDaysList ======= Старт");
+
+            // Если коллекция дней недели еще не инициализирована, создаем её
+            if (DaysOfWeek == null)
             {
-                System.Diagnostics.Debug.WriteLine("\tRebuildDaysList ======= Старт (Реляционная версия)");
-
-                if (DaysOfWeek == null)
-                {
-                    DaysOfWeek = new ObservableCollection<DayScheduleGroup>();
-                }
-
-                DaysOfWeek.Clear();
-
-                string[] allDays = { "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday" };
-
-                string userId = string.Empty;
-                try
-                {
-                    userId = await Microsoft.Maui.Storage.SecureStorage.GetAsync("LoggedInUserID") ?? string.Empty;
-                }
-                catch (Exception ex)
-                {
-                    System.Diagnostics.Debug.WriteLine($"Ошибка SecureStorage: {ex.Message}");
-                }
-
-                List<Habit> allUserHabits = new();
-                if (_dataService != null && !string.IsNullOrEmpty(userId))
-                {
-                    try
-                    {
-                        var habitsResult = await _dataService.GetHabitListAsync(userId);
-                        if (habitsResult != null)
-                        {
-                            allUserHabits = habitsResult;
-                        }
-                    }
-                    catch (Exception ex)
-                    {
-                        System.Diagnostics.Debug.WriteLine($"Ошибка GetHabitListAsync: {ex.Message}");
-                    }
-                }
-
-                var newDaysOfWeek = new ObservableCollection<DayScheduleGroup>();
-
-                foreach (var day in allDays)
-                {
-                    var dayGroup = new DayScheduleGroup { DayName = day };
-                    var itemsForDay = new List<DayScheduleItem>();
-
-                    // Берем активные элементы из реляционного списка CurrentSchedule.HabitSchedules
-                    if (CurrentSchedule?.HabitSchedules != null)
-                    {
-                        var daySchedules = CurrentSchedule.HabitSchedules
-                            .Where(hs => hs.DayOfWeek == day && hs.IsActive);
-
-                        foreach (var scheduleItem in daySchedules)
-                        {
-                            var foundHabit = allUserHabits.FirstOrDefault(h => h.ID == scheduleItem.HabitID);
-                            string habitName = foundHabit?.HabitName ?? "Привычка";
-
-                            itemsForDay.Add(new DayScheduleItem
-                            {
-                                HabitID = scheduleItem.HabitID,
-                                HabitName = habitName,
-                                Time = TimeOnly.FromTimeSpan(scheduleItem.ScheduledTime),
-                                DayName = day
-                            });
-                        }
-                    }
-
-                    // Сортируем по времени
-                    dayGroup.ScheduledItems = itemsForDay.OrderBy(i => i.Time).ToList();
-                    newDaysOfWeek.Add(dayGroup);
-                }
-
-                DaysOfWeek = newDaysOfWeek;
-                System.Diagnostics.Debug.WriteLine("\tRebuildDaysList ======= УСПЕШНО ЗАВЕРШЕНО");
+                DaysOfWeek = new ObservableCollection<DayScheduleGroup>();
             }
-            catch (Exception ex)
+
+            // Очищаем текущую коллекцию перед заполнением новыми данными
+            DaysOfWeek.Clear();
+
+            string[] allDays = { "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday" };
+
+            string userId = string.Empty;
+            userId = await SecureStorage.GetAsync("LoggedInUserID") ?? string.Empty;
+
+            // Список для хранения всех привычек пользователя
+            List<Habit> allUserHabits = new();
+
+            // Если сервис данных доступен и ID пользователя найден, запрашиваем список привычек
+            if (_dataService != null && !string.IsNullOrEmpty(userId))
             {
-                System.Diagnostics.Debug.WriteLine($"КРИТИЧЕСКАЯ ОШИБКА В RebuildDaysList: {ex.Message} \n {ex.StackTrace}");
+                var habitsResult = await _dataService.GetHabitListAsync(userId);
+                if (habitsResult != null)
+                {
+                    allUserHabits = habitsResult;
+                }
             }
+
+            // Проходим по каждому дню недели и сразу добавляем группы в DaysOfWeek
+            foreach (var day in allDays)
+            {
+                var dayGroup = new DayScheduleGroup { DayName = day };
+                var itemsForDay = new List<DayScheduleItem>();
+
+                // Проверяем, загружено ли расписание и содержатся ли в нем привязки привычек
+                if (CurrentSchedule?.HabitSchedules != null)
+                {
+                    // Выбираем только те записи расписания, которые относятся к текущему дню и являются активными (не удалены)
+                    var daySchedules = CurrentSchedule.HabitSchedules
+                        .Where(hs => hs.DayOfWeek == day && hs.IsActive);
+
+                    foreach (var scheduleItem in daySchedules)
+                    {
+                        // Ищем имя привычки по её ID среди всех привычек пользователя
+                        var foundHabit = allUserHabits.FirstOrDefault(h => h.ID == scheduleItem.HabitID);
+                        string habitName = foundHabit?.HabitName ?? "Привычка";
+
+                        // Добавляем элемент в список элементов конкретного дня
+                        itemsForDay.Add(new DayScheduleItem
+                        {
+                            HabitID = scheduleItem.HabitID,
+                            HabitName = habitName,
+                            Time = TimeOnly.FromTimeSpan(scheduleItem.ScheduledTime), // Конвертируем TimeSpan в TimeOnly
+                            DayName = day
+                        });
+                    }
+                }
+
+                // Сортируем привычки внутри дня по времени и сохраняем в группу
+                dayGroup.ScheduledItems = itemsForDay.OrderBy(i => i.Time).ToList();
+
+                // Добавляем готовую группу прямо в основную коллекцию
+                DaysOfWeek.Add(dayGroup);
+            }
+
+            // Логируем успешное завершение работы метода
+            System.Diagnostics.Debug.WriteLine("\tRebuildDaysList ======= УСПЕШНО ЗАВЕРШЕНО");
         }
 
         [RelayCommand]
-        private async Task AddToDay(string dayName)
+        private async Task AddToDay(string dayName) // метод для кнопки + для дня недели 
         {
             System.Diagnostics.Debug.WriteLine($"Нажата кнопка + для дня: {dayName}");
 
@@ -144,36 +132,24 @@ namespace maui_app_ieradumi_2.ViewModels
         [RelayCommand]
         private async Task RemoveTime(DayScheduleItem item)
         {
-            if (item == null || CurrentSchedule?.HabitSchedules == null) return;
+            if (item == null || CurrentSchedule == null) return;
 
-            // 1. Ищем конкретный элемент в памяти по HabitID, Дню недели и Времени
-            var targetRecord = CurrentSchedule.HabitSchedules.FirstOrDefault(hs =>
-                hs.HabitID == item.HabitID &&
-                hs.DayOfWeek == item.DayName &&
-                hs.ScheduledTime == item.Time.ToTimeSpan() &&
-                hs.IsActive);
+            await _dataService.SoftDeleteHabitScheduleAsync(CurrentSchedule.ID, item.HabitID, item.DayName, item.Time.ToTimeSpan());
 
-            if (targetRecord != null)
-            {
-                // 2. Выполняем мягкое удаление (ставим отметку DeletedAt)
-                targetRecord.DeletedAt = DateTime.Now;
+            System.Diagnostics.Debug.WriteLine($"Успешно удалено время {item.Time} (мягкое удаление)");
 
-                // 3. Сохраняем изменения в базу через обновленный сервис
-                await _dataService.UpdateScheduleAsync(CurrentSchedule);
-                System.Diagnostics.Debug.WriteLine($"Успешно удалено время {item.Time} (мягкое удаление)");
-
-                // 4. Перестраиваем список на экране
-                await Shell.Current.GoToAsync("//DeleteHabitFromSchedulePage");
-            }
+            await Shell.Current.GoToAsync("//DeleteHabitFromSchedulePage");
         }
     }
 
+    // класс нужен для того чтобы отображать день недели и хранить в ней привычки которые нужно отобразить у отдельного дня
     public class DayScheduleGroup
     {
         public string DayName { get; set; } = string.Empty;
         public List<DayScheduleItem> ScheduledItems { get; set; } = new();
     }
 
+    // класс нужен для того чтобы отображать отдельные привычки их время на которое они запланированы
     public class DayScheduleItem
     {
         public string HabitID { get; set; } = string.Empty;

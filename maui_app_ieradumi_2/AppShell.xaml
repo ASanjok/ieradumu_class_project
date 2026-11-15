@@ -7,12 +7,15 @@
     xmlns:views ="clr-namespace:maui_app_ieradumi_2.Views"
     Title="maui_app_ieradumi_2">
 
+    <!-- неотображать кнопку для перехода на страницу авторизации, если пользователь уже вошел в систему -->
     <FlyoutItem Title="Auth"
                 FlyoutItemIsVisible="False">
         <ShellContent Title="Auth Page"
                       ContentTemplate="{DataTemplate views:AuthPage}"
                       Route="AuthPage" />
     </FlyoutItem>
+    
+    <!--в меню будет кнопка habit и открыв её снизу экрана будет выбор между списком, изменением, созданием-->
     <FlyoutItem Title="Habit">
         <ShellContent Title="List"
                       ContentTemplate="{DataTemplate views:HabitListPage}"
@@ -24,29 +27,41 @@
                       ContentTemplate="{DataTemplate views:AddHabitPage}"
                       Route="AddHabitPage" />
     </FlyoutItem>
+    
+    <!--в меню будет кнопка schedule-->
     <FlyoutItem Title="Schedule">
         <ShellContent Title="Schedule"
                       ContentTemplate="{DataTemplate views:SchedulePage}"
                       Route="SchedulePage" />
     </FlyoutItem>
+    
+    <!--не отоброжать кнопку для перехода на страницу добавления привычки в расписание-->
     <FlyoutItem Title="Schedule actions"
                 FlyoutItemIsVisible="False">
         <ShellContent Title="Add Habit to Schedule"
                       ContentTemplate="{DataTemplate views:AddHabitToSchedulePage}"
                       Route="AddHabitToSchedulePage" />
     </FlyoutItem>
+    
+    <!--не отоброжать кнопку для перехода на страницу удаления привычки из расписания-->
     <FlyoutItem Title="Schedule delete action"
                 FlyoutItemIsVisible="False">
         <ShellContent Title="delete Habit from Schedule"
                   ContentTemplate="{DataTemplate views:DeleteHabitFromSchedulePage}"
                   Route="DeleteHabitFromSchedulePage" />
     </FlyoutItem>
+    
+    <!--в меню будет кнопка информации о пользователе-->
     <ShellContent Title="User Info"
                   ContentTemplate="{DataTemplate views:UserInfoPage}"
                   Route="UserInfoPage" />
+    
+    <!--в меню будет кнопка для отображения страницы "записей о выполнении"-->
     <ShellContent Title="Completion Page"
                   ContentTemplate="{DataTemplate views:CompletionPage}"
                   Route="CompletionPage" />
+    
+    <!--сделать кнопку выхода из аккаунта в низу меню-->
     <Shell.FlyoutFooter>
         <VerticalStackLayout Padding="20">
             <HorizontalStackLayout Spacing="15"
@@ -55,10 +70,6 @@
                 <HorizontalStackLayout.GestureRecognizers>
                     <TapGestureRecognizer Tapped="OnLogoutClicked" />
                 </HorizontalStackLayout.GestureRecognizers>
-
-                <Image Source="logout_icon.png"
-                       HeightRequest="24"
-                       WidthRequest="24" />
 
                 <Label Text="Logout"
                        VerticalOptions="Center"

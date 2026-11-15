@@ -9,7 +9,7 @@ public partial class AddHabitToSchedulePage : ContentPage
     public AddHabitToSchedulePage(AddHabitToScheduleViewModel viewModel)
 	{
 		InitializeComponent();
-        _viewModel = viewModel;
+        _viewModel = viewModel; //переменная нужна для того чтобы при открытии страницы сразу загружались данные из базы данных (в данном случае список привычек)
         BindingContext = _viewModel;
     }
 

@@ -2,9 +2,7 @@
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using maui_app_ieradumi_2.Services;
-using Microsoft.Maui.Storage; // Для получения userId, если нужно
 using System.Collections.ObjectModel;
-using System.Threading.Tasks;
 
 namespace maui_app_ieradumi_2.ViewModels
 {

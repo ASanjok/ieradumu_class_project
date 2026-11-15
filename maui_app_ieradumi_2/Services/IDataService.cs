@@ -18,8 +18,7 @@ namespace maui_app_ieradumi_2.Services
         Task<User?> GetUserByIdAsync(string userId);
         Task UpdateUserAsync(User user);
         Task<Schedule?> GetScheduleByUserIdAsync(string userId);
-
-
+        Task SoftDeleteHabitScheduleAsync(string scheduleId, string habitId, string dayOfWeek, TimeSpan scheduledTime);
         Task UpdateScheduleAsync(Schedule schedule);
     }
 }

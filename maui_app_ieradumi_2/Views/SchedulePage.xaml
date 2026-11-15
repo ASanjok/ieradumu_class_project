@@ -110,13 +110,11 @@
                                     </BindableLayout.EmptyView>
 
                                     <BindableLayout.ItemTemplate>
-                                        <DataTemplate >
-                                            <!-- Изменяем Grid, чтобы уместить кнопку удаления: Время, Название, Кнопка "-" -->
+                                        <DataTemplate>
                                             <Grid ColumnDefinitions="Auto, *, Auto"
                                                   Margin="0,2"
                                                   ColumnSpacing="10">
 
-                                                <!-- Время -->
                                                 <Frame Grid.Column="0"
                                                        Padding="8,4"
                                                        BackgroundColor="#E2E8F0"
@@ -129,13 +127,11 @@
                                                            TextColor="#1E293B" />
                                                 </Frame>
 
-                                                <!-- Название привычки -->
                                                 <Label Grid.Column="1"
                                                        Text="{Binding HabitName}"
                                                        VerticalOptions="Center"
                                                        TextColor="DarkBlue" />
 
-                                                <!-- КНОПКА МИНУС -->
                                                 <Button Grid.Column="2"
                                                         Text="-"
                                                         TextColor="Red"
