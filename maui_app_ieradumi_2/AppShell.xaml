@@ -15,14 +15,31 @@
     </FlyoutItem>
     <FlyoutItem Title="Habit">
         <ShellContent Title="List"
-                  ContentTemplate="{DataTemplate views:HabitListPage}"
-                  Route="HabitListPage" />
+                      ContentTemplate="{DataTemplate views:HabitListPage}"
+                      Route="HabitListPage" />
         <ShellContent Title="Edit"
-                  ContentTemplate="{DataTemplate views:EditHabitPage}"
-                  Route="EditHabitPage" />
+                      ContentTemplate="{DataTemplate views:EditHabitPage}"
+                      Route="EditHabitPage" />
         <ShellContent Title="create"
-                  ContentTemplate="{DataTemplate views:AddHabitPage}"
-                  Route="AddHabitPage" />
+                      ContentTemplate="{DataTemplate views:AddHabitPage}"
+                      Route="AddHabitPage" />
+    </FlyoutItem>
+    <FlyoutItem Title="Schedule">
+        <ShellContent Title="Schedule"
+                      ContentTemplate="{DataTemplate views:SchedulePage}"
+                      Route="SchedulePage" />
+    </FlyoutItem>
+    <FlyoutItem Title="Schedule actions"
+                FlyoutItemIsVisible="False">
+        <ShellContent Title="Add Habit to Schedule"
+                      ContentTemplate="{DataTemplate views:AddHabitToSchedulePage}"
+                      Route="AddHabitToSchedulePage" />
+    </FlyoutItem>
+    <FlyoutItem Title="Schedule delete action"
+                FlyoutItemIsVisible="False">
+        <ShellContent Title="delete Habit from Schedule"
+                  ContentTemplate="{DataTemplate views:DeleteHabitFromSchedulePage}"
+                  Route="DeleteHabitFromSchedulePage" />
     </FlyoutItem>
     <ShellContent Title="User Info"
                   ContentTemplate="{DataTemplate views:UserInfoPage}"

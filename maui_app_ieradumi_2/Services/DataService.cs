@@ -197,7 +197,40 @@ namespace maui_app_ieradumi_2.Services
                 await _connection.UpdateAsync(user);
             }
         }
+        public async Task<Schedule?> GetScheduleByUserIdAsync(string userId)
+        {
+            Schedule schedule = await _connection.Table<Schedule>().Where(s => s.UserID == userId).FirstOrDefaultAsync();
+            if (schedule == null)
+            {
+                schedule = new Schedule
+                {
+                    ID = Guid.NewGuid().ToString(),
+                    UserID = await SecureStorage.GetAsync("LoggedInUserID"),
+                    Archived = false,
+                };
+
+                await _connection.InsertAsync(schedule);
+            }
+
+            return schedule;
+        }
+        public async Task UpdateScheduleAsync(Schedule schedule)
+        {
+
+            System.Diagnostics.Debug.WriteLine("UpdateScheduleAsync -----");
+            await _connection.UpdateAsync(schedule);
+            var schedules = await _connection.Table<Schedule>().ToListAsync();
+
+            // 3. Выводим каждый элемент списка в лог
+            System.Diagnostics.Debug.WriteLine($"Всего расписаний в базе: {schedules.Count}");
+
+            foreach (var item in schedules)
+            {
+                // Выводим ID, пользователя и количество привычек в каждом расписании
+                System.Diagnostics.Debug.WriteLine($"[Schedule] ID: {item.ID}, UserID: {item.UserID}, Привычек: {item.ScheduledHabits?.Count ?? 0}, Изменено: {item.ScheduleLastChangeDate}");
+            }
+        }
     }
 }
-        
+
 

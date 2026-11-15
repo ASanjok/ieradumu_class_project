@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="maui_app_ieradumi_2.Views.AddHabitToSchedulePage"
+             Title="AddHabitToSchedulePage">
+    <ScrollView>
+        <VerticalStackLayout Padding="20"
+                             Spacing="20">
+
+            <Label Text="{Binding PageTitle}"
+                   FontSize="20"
+                   FontAttributes="Bold"
+                   HorizontalOptions="Center" />
+
+            <VerticalStackLayout Spacing="5">
+                <Label Text="Выберите привычку:"
+                       FontAttributes="Bold" />
+                <Picker ItemsSource="{Binding AvailableHabits}"
+                        ItemDisplayBinding="{Binding HabitName}"
+                        SelectedItem="{Binding SelectedHabit}"
+                        Title="Нажмите, чтобы выбрать привычку" />
+            </VerticalStackLayout>
+
+            <VerticalStackLayout Spacing="5">
+                <Label Text="Выберите время:"
+                       FontAttributes="Bold" />
+                <TimePicker Time="{Binding SelectedTime}" />
+            </VerticalStackLayout>
+
+            <Button Text="Добавить в расписание"
+                    Command="{Binding SaveCommand}"
+                    Margin="0,20,0,0"
+                    HeightRequest="45" />
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

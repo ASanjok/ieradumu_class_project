@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="maui_app_ieradumi_2.Views.SchedulePage"
+             xmlns:viewmodels="clr-namespace:maui_app_ieradumi_2.ViewModels"
+             Title="SchedulePage">
+    <ScrollView>
+        <VerticalStackLayout Padding="20"
+                             Spacing="20">
+
+            <Border Stroke="LightGray"
+                    StrokeThickness="1"
+                    Padding="15">
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="10" />
+                </Border.StrokeShape>
+                <VerticalStackLayout Spacing="10">
+                    <Label Text="Общая информация"
+                           FontAttributes="Bold"
+                           FontSize="18"
+                           TextColor="#2B3C5A" />
+
+                    <HorizontalStackLayout Spacing="10">
+                        <Label Text="Schedule ID:"
+                               FontAttributes="Bold"
+                               TextColor="Gray" />
+                        <Label Text="{Binding CurrentSchedule.ID}" />
+                    </HorizontalStackLayout>
+
+                    <HorizontalStackLayout Spacing="10">
+                        <Label Text="User ID:"
+                               FontAttributes="Bold"
+                               TextColor="Gray" />
+                        <Label Text="{Binding CurrentSchedule.UserID}" />
+                    </HorizontalStackLayout>
+
+                    <HorizontalStackLayout Spacing="10"
+                                           VerticalOptions="Center">
+                        <Label Text="Archived:"
+                               FontAttributes="Bold"
+                               TextColor="Gray"
+                               VerticalOptions="Center" />
+                        <CheckBox IsChecked="{Binding CurrentSchedule.Archived}"
+                                  IsEnabled="False" />
+                    </HorizontalStackLayout>
+
+                    <HorizontalStackLayout Spacing="10">
+                        <Label Text="Created:"
+                               FontAttributes="Bold"
+                               TextColor="Gray" />
+                        <Label Text="{Binding CurrentSchedule.ScheduleCreationDate, StringFormat='{0:dd.MM.yyyy HH:mm}'}" />
+                    </HorizontalStackLayout>
+
+                    <HorizontalStackLayout Spacing="10">
+                        <Label Text="Last Changed:"
+                               FontAttributes="Bold"
+                               TextColor="Gray" />
+                        <Label Text="{Binding CurrentSchedule.ScheduleLastChangeDate, StringFormat='{0:dd.MM.yyyy HH:mm}'}" />
+                    </HorizontalStackLayout>
+                </VerticalStackLayout>
+            </Border>
+
+            <Label Text="Расписание по дням:"
+                   FontAttributes="Bold"
+                   FontSize="18"
+                   Margin="0,10,0,0" />
+
+            <VerticalStackLayout BindableLayout.ItemsSource="{Binding DaysOfWeek}"
+                                 Spacing="15">
+                <BindableLayout.ItemTemplate>
+                    <DataTemplate>
+
+                        <Border Stroke="#A5B4CB"
+                                StrokeThickness="1"
+                                Padding="15"
+                                BackgroundColor="#F8FAFC">
+                            <Border.StrokeShape>
+                                <RoundRectangle CornerRadius="8" />
+                            </Border.StrokeShape>
+
+                            <VerticalStackLayout Spacing="10">
+
+                                <Grid ColumnDefinitions="*, Auto">
+                                    <Label Grid.Column="0"
+                                           Text="{Binding DayName}"
+                                           FontAttributes="Bold"
+                                           FontSize="16"
+                                           VerticalOptions="Center" />
+
+                                    <Button Grid.Column="1"
+                                            Text="+"
+                                            WidthRequest="40"
+                                            HeightRequest="40"
+                                            Padding="0"
+                                            Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodels:ScheduleViewModel}}, Path=AddToDayCommand}"
+                                            CommandParameter="{Binding DayName}" />
+                                </Grid>
+
+                                <BoxView HeightRequest="1"
+                                         Color="LightGray"
+                                         Margin="0,5" />
+
+                                <VerticalStackLayout BindableLayout.ItemsSource="{Binding ScheduledItems}"
+                                                     Spacing="5">
+
+                                    <BindableLayout.EmptyView>
+                                        <Label Text="Нет привычек на этот день"
+                                               TextColor="Gray"
+                                               FontAttributes="Italic" />
+                                    </BindableLayout.EmptyView>
+
+                                    <BindableLayout.ItemTemplate>
+                                        <DataTemplate >
+                                            <!-- Изменяем Grid, чтобы уместить кнопку удаления: Время, Название, Кнопка "-" -->
+                                            <Grid ColumnDefinitions="Auto, *, Auto"
+                                                  Margin="0,2"
+                                                  ColumnSpacing="10">
+
+                                                <!-- Время -->
+                                                <Frame Grid.Column="0"
+                                                       Padding="8,4"
+                                                       BackgroundColor="#E2E8F0"
+                                                       CornerRadius="4"
+                                                       HasShadow="False"
+                                                       VerticalOptions="Center">
+                                                    <Label Text="{Binding Time}"
+                                                           FontSize="14"
+                                                           FontAttributes="Bold"
+                                                           TextColor="#1E293B" />
+                                                </Frame>
+
+                                                <!-- Название привычки -->
+                                                <Label Grid.Column="1"
+                                                       Text="{Binding HabitName}"
+                                                       VerticalOptions="Center"
+                                                       TextColor="DarkBlue" />
+
+                                                <!-- КНОПКА МИНУС -->
+                                                <Button Grid.Column="2"
+                                                        Text="-"
+                                                        TextColor="Red"
+                                                        BackgroundColor="Transparent"
+                                                        FontSize="16"
+                                                        FontAttributes="Bold"
+                                                        WidthRequest="35"
+                                                        HeightRequest="35"
+                                                        Padding="0"
+                                                        VerticalOptions="Center"
+                                                        Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodels:ScheduleViewModel}}, Path=RemoveTimeCommand}"
+                                                        CommandParameter="{Binding .}" />
+                                            </Grid>
+                                        </DataTemplate>
+                                    </BindableLayout.ItemTemplate>
+                                </VerticalStackLayout>
+
+                            </VerticalStackLayout>
+                        </Border>
+                    </DataTemplate>
+                </BindableLayout.ItemTemplate>
+            </VerticalStackLayout>
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

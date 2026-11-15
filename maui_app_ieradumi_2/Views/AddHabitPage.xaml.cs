@@ -4,9 +4,11 @@ namespace maui_app_ieradumi_2.Views;
 
 public partial class AddHabitPage : ContentPage
 {
-	public AddHabitPage(AddHabitViewModel viewModel)
+    private readonly AddHabitViewModel _viewModel;
+    public AddHabitPage(AddHabitViewModel viewModel)
 	{
-		InitializeComponent();
-		BindingContext = viewModel;
-	}
+        InitializeComponent();
+        _viewModel = viewModel;
+        BindingContext = _viewModel;
+    }
 }
