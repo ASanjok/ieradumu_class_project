@@ -18,6 +18,7 @@ namespace maui_app_ieradumi_2.Services
             _connection = new SQLiteAsyncConnection(DBPath);
             _connection.CreateTableAsync<User>().Wait();
             _connection.CreateTableAsync<Habit>().Wait();
+            _connection.CreateTableAsync<HabitSchedule>().Wait();
             _connection.CreateTableAsync<CompletionRecord>().Wait();
             _connection.CreateTableAsync<Schedule>().Wait();
 
@@ -31,6 +32,7 @@ namespace maui_app_ieradumi_2.Services
             }
             _connection.CreateTableAsync<User>();
             _connection.CreateTableAsync<Habit>();
+            _connection.CreateTableAsync<HabitSchedule>();
             _connection.CreateTableAsync<CompletionRecord>();
             _connection.CreateTableAsync<Schedule>();
 
@@ -199,35 +201,56 @@ namespace maui_app_ieradumi_2.Services
         }
         public async Task<Schedule?> GetScheduleByUserIdAsync(string userId)
         {
+            if (string.IsNullOrEmpty(userId)) return null;
+
             Schedule schedule = await _connection.Table<Schedule>().Where(s => s.UserID == userId).FirstOrDefaultAsync();
+
             if (schedule == null)
             {
                 schedule = new Schedule
                 {
-                    ID = Guid.NewGuid().ToString(),
-                    UserID = await SecureStorage.GetAsync("LoggedInUserID"),
+                    ID = "schedule_ID_" + Guid.NewGuid().ToString("N").Substring(0, 8),
+                    UserID = userId,
                     Archived = false,
+                    ScheduleCreationDate = DateTime.Now,
+                    ScheduleLastChangeDate = DateTime.Now
                 };
 
                 await _connection.InsertAsync(schedule);
             }
 
+            schedule.HabitSchedules = await _connection.Table<HabitSchedule>()
+                .Where(hs => hs.ScheduleID == schedule.ID && hs.DeletedAt == null)
+                .ToListAsync();
+
             return schedule;
         }
+
         public async Task UpdateScheduleAsync(Schedule schedule)
         {
+            System.Diagnostics.Debug.WriteLine("UpdateScheduleAsync (Реляционный) -----");
 
-            System.Diagnostics.Debug.WriteLine("UpdateScheduleAsync -----");
-            await _connection.UpdateAsync(schedule);
-            var schedules = await _connection.Table<Schedule>().ToListAsync();
-
-            // 3. Выводим каждый элемент списка в лог
-            System.Diagnostics.Debug.WriteLine($"Всего расписаний в базе: {schedules.Count}");
-
-            foreach (var item in schedules)
+            if (schedule != null)
             {
-                // Выводим ID, пользователя и количество привычек в каждом расписании
-                System.Diagnostics.Debug.WriteLine($"[Schedule] ID: {item.ID}, UserID: {item.UserID}, Привычек: {item.ScheduledHabits?.Count ?? 0}, Изменено: {item.ScheduleLastChangeDate}");
+                schedule.ScheduleLastChangeDate = DateTime.Now;
+                await _connection.UpdateAsync(schedule);
+
+                if (schedule.HabitSchedules != null)
+                {
+                    foreach (var item in schedule.HabitSchedules)
+                    {
+                        var existing = await _connection.FindAsync<HabitSchedule>(item.ID);
+                        if (existing == null)
+                        {
+                            await _connection.InsertAsync(item);
+                            System.Diagnostics.Debug.WriteLine($"Вставлен новый HabitSchedule: {item.ID}");
+                        }
+                        else
+                        {
+                            await _connection.UpdateAsync(item);
+                        }
+                    }
+                }
             }
         }
     }

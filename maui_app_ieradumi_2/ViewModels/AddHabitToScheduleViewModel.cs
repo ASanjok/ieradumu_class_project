@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace maui_app_ieradumi_2.ViewModels
 {
@@ -44,7 +45,8 @@ namespace maui_app_ieradumi_2.ViewModels
 
             AvailableHabits.Clear();
             var userId = await SecureStorage.GetAsync("LoggedInUserID");
-            System.Diagnostics.Debug.WriteLine($"LoadDataAsync\nпользователь ид - "+userId);
+            System.Diagnostics.Debug.WriteLine($"LoadDataAsync\nпользователь ид - " + userId);
+
             if (!string.IsNullOrEmpty(userId))
             {
                 var habits = await _dataService.GetHabitListAsync(userId);
@@ -61,34 +63,41 @@ namespace maui_app_ieradumi_2.ViewModels
             System.Diagnostics.Debug.WriteLine("запущена save");
             if (SelectedHabit == null)
             {
-                System.Diagnostics.Debug.WriteLine("запущена save 1");
-                await Shell.Current.DisplayAlertAsync("Ошибка", "Пожалуйста, выберите привычку", "ОК");
+                await Shell.Current.DisplayAlert("Ошибка", "Пожалуйста, выберите привычку", "ОК");
                 return;
             }
 
             if (string.IsNullOrEmpty(ScheduleId))
             {
-                System.Diagnostics.Debug.WriteLine("запущена save 2");
-                await Shell.Current.DisplayAlertAsync("Ошибка", "Не найден ID расписания", "ОК");
+                await Shell.Current.DisplayAlert("Ошибка", "Не найден ID расписания", "ОК");
                 return;
             }
+            var userId = await SecureStorage.GetAsync("LoggedInUserID");
+            var schedule = await _dataService.GetScheduleByUserIdAsync(userId);
 
-            var schedule = await _dataService.GetScheduleByUserIdAsync(await SecureStorage.GetAsync("LoggedInUserID"));
-
-            System.Diagnostics.Debug.WriteLine("запущена save 3");
             if (schedule != null)
             {
-                System.Diagnostics.Debug.WriteLine("запущена save 4");
-                TimeOnly timeOnly = TimeOnly.FromTimeSpan(SelectedTime);
-                List<TimeOnly> timeList = new List<TimeOnly> { timeOnly };
+                schedule.HabitSchedules ??= new List<HabitSchedule>();
 
-                schedule.AddTimeToScheduledHabit(SelectedHabit.ID, Day, timeList);
+                var newHabitSchedule = new HabitSchedule
+                {
+                    ID = "item_ID_" + Guid.NewGuid().ToString("N").Substring(0, 8),
+                    ScheduleID = schedule.ID,
+                    HabitID = SelectedHabit.ID,
+                    DayOfWeek = Day, // Например, "Monday"
+                    ScheduledTime = SelectedTime,
+                    CreatedAt = DateTime.Now,
+                    DeletedAt = null
+                };
 
+                schedule.HabitSchedules.Add(newHabitSchedule);
+
+                // Сохраняем расписание и дочерний элемент в базу
                 await _dataService.UpdateScheduleAsync(schedule);
 
+                System.Diagnostics.Debug.WriteLine("Привычка успешно сохранена в базу!");
                 await Shell.Current.GoToAsync("//SchedulePage");
             }
         }
     }
-
 }

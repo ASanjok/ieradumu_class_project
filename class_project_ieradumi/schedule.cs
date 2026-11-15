@@ -1,4 +1,5 @@
-﻿using SQLite;
+﻿using class_project_ieradumi;
+using SQLite;
 
 public class Schedule
 {
@@ -8,9 +9,10 @@ public class Schedule
     public bool Archived { get; set; }
     public DateTime ScheduleCreationDate { get; set; }
     public DateTime ScheduleLastChangeDate { get; set; }
+    [Ignore]
+    public List<HabitSchedule> HabitSchedules { get; set; }
     public Schedule()
     {
-
         ScheduleCreationDate = DateTime.Now;
         ScheduleLastChangeDate = DateTime.Now;
     }
