@@ -1,4 +1,3 @@
-using AndroidX.Lifecycle;
 
 namespace maui_app_ieradumi_2.Views;
 

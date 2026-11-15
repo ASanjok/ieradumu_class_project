@@ -44,6 +44,9 @@
     <ShellContent Title="User Info"
                   ContentTemplate="{DataTemplate views:UserInfoPage}"
                   Route="UserInfoPage" />
+    <ShellContent Title="Completion Page"
+                  ContentTemplate="{DataTemplate views:CompletionPage}"
+                  Route="CompletionPage" />
     <Shell.FlyoutFooter>
         <VerticalStackLayout Padding="20">
             <HorizontalStackLayout Spacing="15"

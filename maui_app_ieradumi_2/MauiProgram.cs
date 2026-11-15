@@ -28,8 +28,9 @@ namespace maui_app_ieradumi_2
             builder.Services.AddTransient<EditHabitViewModel>();
             builder.Services.AddTransient<AddHabitViewModel>();
             builder.Services.AddTransient<UserInfoViewModel>();
-            builder.Services.AddTransient<ScheduleViewModel>(); 
+            builder.Services.AddTransient<ScheduleViewModel>();
             builder.Services.AddTransient<AddHabitToScheduleViewModel>();
+            builder.Services.AddTransient<CompletionViewModel>();
 
             builder.Services.AddTransient<AuthPage>();
             builder.Services.AddTransient<HabitListPage>();
@@ -39,6 +40,7 @@ namespace maui_app_ieradumi_2
             builder.Services.AddTransient<SchedulePage>();
             builder.Services.AddTransient<AddHabitToSchedulePage>();
             builder.Services.AddTransient<DeleteHabitFromSchedulePage>();
+            builder.Services.AddTransient<CompletionPage>();
 
             builder.Services.AddTransient<Views.Elements.HabitInfoElement>();
             //-----------------------------------------------------------------
