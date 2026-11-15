@@ -2,12 +2,7 @@
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using maui_app_ieradumi_2.Services;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Threading.Tasks;
-using static Android.Net.Http.SslCertificate;
 
 namespace maui_app_ieradumi_2.ViewModels
 {

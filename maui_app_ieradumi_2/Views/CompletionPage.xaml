@@ -1,12 +1,122 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewmodels="clr-namespace:maui_app_ieradumi_2.ViewModels"
              x:Class="maui_app_ieradumi_2.Views.CompletionPage"
              Title="CompletionPage">
-    <VerticalStackLayout>
-        <Label 
-            Text="Welcome to .NET MAUI!"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
-    </VerticalStackLayout>
+    <ContentPage.BindingContext>
+        <viewmodels:CompletionViewModel />
+    </ContentPage.BindingContext>
+
+    <Grid RowDefinitions="Auto, *"
+          Margin="15"
+          RowSpacing="15">
+
+        <!-- Выбор даты для проверки -->
+        <VerticalStackLayout Grid.Row="0"
+                             Spacing="5"
+                             HorizontalOptions="Center">
+            <Label Text="Выберите дату для просмотра:"
+                   FontSize="14"
+                   TextColor="Gray"
+                   HorizontalOptions="Center" />
+            <DatePicker Date="{Binding SelectedDate}"
+                        Format="dd.MM.yyyy"
+                        FontSize="18"
+                        FontAttributes="Bold" />
+        </VerticalStackLayout>
+
+        <!-- Список привычек за выбранный день -->
+        <CollectionView Grid.Row="1"
+                        ItemsSource="{Binding TasksList}">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Border Stroke="LightGray"
+                            StrokeThickness="1"
+                            Padding="12"
+                            Margin="0,5"
+                            BackgroundColor="#FFFFFF">
+                        <Border.StrokeShape>
+                            <RoundRectangle CornerRadius="8" />
+                        </Border.StrokeShape>
+
+                        <Grid ColumnDefinitions="Auto, *, Auto, Auto"
+                              ColumnSpacing="10">
+                            <!-- Время -->
+                            <Label Text="{Binding ScheduledTime, StringFormat='{0:HH\\:mm}'}"
+                                   VerticalOptions="Center"
+                                   FontSize="16"
+                                   FontAttributes="Bold" />
+
+                            <!-- Название привычки -->
+                            <Label Text="{Binding HabitName}"
+                                   Grid.Column="1"
+                                   VerticalOptions="Center"
+                                   FontSize="16"
+                                   TextColor="#1E293B" />
+
+                            <!-- Текстовый индикатор статуса -->
+                            <Label Text="{Binding Status}"
+                                   Grid.Column="2"
+                                   VerticalOptions="Center"
+                                   FontAttributes="Bold">
+                                <Label.Triggers>
+                                    <DataTrigger TargetType="Label"
+                                                 Binding="{Binding Status}"
+                                                 Value="Completed">
+                                        <Setter Property="TextColor"
+                                                Value="Green" />
+                                        <Setter Property="Text"
+                                                Value="✔ Выполнено" />
+                                    </DataTrigger>
+                                    <DataTrigger TargetType="Label"
+                                                 Binding="{Binding Status}"
+                                                 Value="Overdue">
+                                        <Setter Property="TextColor"
+                                                Value="Red" />
+                                        <Setter Property="Text"
+                                                Value="❌ Пропущено" />
+                                    </DataTrigger>
+                                    <DataTrigger TargetType="Label"
+                                                 Binding="{Binding Status}"
+                                                 Value="Pending">
+                                        <Setter Property="TextColor"
+                                                Value="Orange" />
+                                        <Setter Property="Text"
+                                                Value="⏳ Ожидается" />
+                                    </DataTrigger>
+                                </Label.Triggers>
+                            </Label>
+
+                            <!-- Кнопка "Выполнить" (активна, если еще не выполнено) -->
+                            <Button Text="✔"
+                                    Grid.Column="3"
+                                    Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodels:CompletionViewModel}}, Path=CompleteTaskCommand}"
+                                    CommandParameter="{Binding .}"
+                                    WidthRequest="45"
+                                    HeightRequest="45"
+                                    Padding="0">
+                                <Button.Triggers>
+                                    <DataTrigger TargetType="Button"
+                                                 Binding="{Binding Status}"
+                                                 Value="Completed">
+                                        <Setter Property="IsEnabled"
+                                                Value="False" />
+                                    </DataTrigger>
+                                </Button.Triggers>
+                            </Button>
+                        </Grid>
+                    </Border>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+
+            <CollectionView.EmptyView>
+                <Label Text="На выбранную дату привычек не было 🎉"
+                       HorizontalOptions="Center"
+                       VerticalOptions="Center"
+                       TextColor="Gray"
+                       FontAttributes="Italic" />
+            </CollectionView.EmptyView>
+        </CollectionView>
+    </Grid>
 </ContentPage>
