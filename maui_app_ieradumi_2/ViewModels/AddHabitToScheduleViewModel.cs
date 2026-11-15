@@ -84,7 +84,7 @@ namespace maui_app_ieradumi_2.ViewModels
                     ID = "item_ID_" + Guid.NewGuid().ToString("N").Substring(0, 8),
                     ScheduleID = schedule.ID,
                     HabitID = SelectedHabit.ID,
-                    DayOfWeek = Day, // Например, "Monday"
+                    DayOfWeek = Day, 
                     ScheduledTime = SelectedTime,
                     CreatedAt = DateTime.Now,
                     DeletedAt = null
