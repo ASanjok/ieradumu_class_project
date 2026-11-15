@@ -9,15 +9,13 @@ namespace class_project_ieradumi
     public class CompletionRecord
     {
         [PrimaryKey]
-        public string ID { 
-            get; 
-            set 
-            { 
-                ID = "completion_record_ID_" + value; 
-            } 
-        }
+        public string ID { get; set; }
 
         public string HabitID { get; set; }
+        public string UserID { get; set; }
+        public DateTime CompletionDate { get; set; } // дата выполнения привычки
+        public bool InTime { get; set; } // выполнена ли привычка в срок
+        public bool HasTheRecordBeenUsed { get; set; } // прошла ли дата этой привычки, либо была ли она использована
         [Ignore]
         public Dictionary<string, TimeOnly> ScheduleTime { get; set; }
         public string ScheduleTimeJSON
@@ -27,20 +25,13 @@ namespace class_project_ieradumi
                ? new Dictionary<string, TimeOnly>()
                : JsonSerializer.Deserialize<Dictionary<string, TimeOnly>>(value) ?? new Dictionary<string, TimeOnly>();
         }
-        
-        public DateTime CompletionDate { get; set; }
-        public string UserID { get; set; }
-        public bool InTime { get; set; }
+
 
         public CompletionRecord()
         {
         }
         public CompletionRecord(string HabitID, DateTime CompletionDate, string UserID, bool InTime, string ID, Dictionary<string, TimeOnly> ScheduleTime) // Constructor for creating object of already existing completion_record
         {
-            if (ID.Substring(0, 21) != "completion_record_ID_")
-            {
-                throw new ArgumentException("ID is not valid. It must start with 'completion_record_ID_<unique_id>'.");
-            }
             this.ID = ID;
             this.HabitID = HabitID;
             this.CompletionDate = CompletionDate;
