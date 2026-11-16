@@ -8,4 +8,5 @@
     <Deploy Solution="Debug|*" />
   </Project>
   <Project Path="shared_object_ieradumi/shared_object_ieradumi.csproj" Id="4c05fc97-fa96-4a18-b5f0-3447ba6f943c" />
+  <Project Path="TestProject2/TestProject2.csproj" Id="d4cd5ec5-1969-4484-b179-a3a954fb6aba" />
 </Solution>
