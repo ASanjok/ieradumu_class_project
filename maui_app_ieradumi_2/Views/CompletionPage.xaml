@@ -4,9 +4,6 @@
              xmlns:viewmodels="clr-namespace:maui_app_ieradumi_2.ViewModels"
              x:Class="maui_app_ieradumi_2.Views.CompletionPage"
              Title="CompletionPage">
-    <ContentPage.BindingContext>
-        <viewmodels:CompletionViewModel />
-    </ContentPage.BindingContext>
 
     <Grid RowDefinitions="Auto, *"
           Margin="15"

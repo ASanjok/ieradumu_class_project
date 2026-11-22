@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using class_project_ieradumi;
 using SQLite;
-using class_project_ieradumi;
-using maui_app_ieradumi_2.Views;
 
 namespace maui_app_ieradumi_2.Services
 {
@@ -75,7 +71,7 @@ namespace maui_app_ieradumi_2.Services
 
             }
         }
-        public async Task<bool> LoginAsync(string username, string password)
+        public async Task<bool> LoginAsync(string username, string password) // создан api endpoint
         {
             System.Diagnostics.Debug.WriteLine("запущена фукнция LoginAsync " + username + " | " + password);
             if (!string.IsNullOrEmpty(username) && !string.IsNullOrEmpty(password))
@@ -89,7 +85,7 @@ namespace maui_app_ieradumi_2.Services
             }
             return false;
         }
-        public async Task<bool> RegisterAsync(string username, string password)
+        public async Task<bool> RegisterAsync(string username, string password) // создан api endpoint
         {
             if (!string.IsNullOrEmpty(username) && !string.IsNullOrEmpty(password))
             {
@@ -133,7 +129,6 @@ namespace maui_app_ieradumi_2.Services
             if (habit != null)
             {
                 await _connection.InsertAsync(habit);
-
             }
         }
         public async Task<List<Habit>> GetHabitListAsync(string userId)
@@ -183,7 +178,7 @@ namespace maui_app_ieradumi_2.Services
                 }
             }
         }
-        public async Task<User?> GetUserByIdAsync(string userId)
+        public async Task<User?> GetUserByIdAsync(string userId) // создан api endpoint
         {
             if (!string.IsNullOrEmpty(userId))
             {
@@ -192,7 +187,7 @@ namespace maui_app_ieradumi_2.Services
             }
             return null;
         }
-        public async Task UpdateUserAsync(User user)
+        public async Task UpdateUserAsync(User user) // создан api endpoint
         {
             if (user != null)
             {
@@ -277,6 +272,35 @@ namespace maui_app_ieradumi_2.Services
 
                 System.Diagnostics.Debug.WriteLine($"[DataService] HabitSchedule {targetRecord.ID} успешно помечен как удаленный (DeletedAt).");
             }
+        }
+
+        public async Task<List<CompletionRecord>> GetCompletionsByUserAndDateAsync(string userId, DateTime date)
+        {
+            var startOfDay = date.Date;
+            var endOfDay = startOfDay.AddDays(1);
+
+            return await _connection.Table<CompletionRecord>()
+                .Where(c => c.UserID == userId &&
+                            c.CompletionDate >= startOfDay &&
+                            c.CompletionDate < endOfDay)
+                .ToListAsync();
+        }
+
+        public async Task AddCompletionAsync(string habitId, string userId, DateTime completionDate, bool inTime, bool hasTheRecordBeenUsed, Dictionary<string, TimeOnly> scheduleTime)
+        {
+            CompletionRecord record = new CompletionRecord()
+            {
+                ID = "completion_record_ID_" + Guid.NewGuid().ToString("N").Substring(0, 8),
+                HabitID = habitId,
+                UserID = userId,
+                CompletionDate = completionDate,
+                InTime = inTime,
+                HasTheRecordBeenUsed = hasTheRecordBeenUsed,
+                ScheduleTime = scheduleTime,
+            };
+
+            await _connection.InsertAsync(record);
+            return;
         }
     }
 }
