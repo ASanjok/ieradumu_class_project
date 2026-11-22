@@ -67,8 +67,8 @@ namespace class_project_ieradumi
         }
         public User()
         {
-            _userCreationDate = DateTime.Now;
-            _userLastChangeDate = DateTime.Now;
+            _userCreationDate = DateTime.UtcNow;
+            _userLastChangeDate = DateTime.UtcNow;
         }
         public User(string ID, string username, string email, string password, bool archived, DateTime user_creation_date, DateTime user_last_change_date) // Constructor for creating object of already existing user
         {

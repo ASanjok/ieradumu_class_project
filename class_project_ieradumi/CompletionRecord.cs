@@ -1,6 +1,7 @@
 ﻿using SQLite;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 using System.Text.Json;
 
@@ -10,13 +11,13 @@ namespace class_project_ieradumi
     {
         [PrimaryKey]
         public string ID { get; set; }
-
         public string HabitID { get; set; }
         public string UserID { get; set; }
         public DateTime CompletionDate { get; set; } // дата выполнения привычки
         public bool InTime { get; set; } // выполнена ли привычка в срок
         public bool HasTheRecordBeenUsed { get; set; } // прошла ли дата этой привычки, либо была ли она использована
         [Ignore]
+        [NotMapped]
         public Dictionary<string, TimeOnly> ScheduleTime { get; set; }
         public string ScheduleTimeJSON
         {

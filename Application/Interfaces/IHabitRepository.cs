@@ -7,10 +7,10 @@ namespace Application.Interfaces
 {
     public interface IHabitRepository
     {
-        Task<List<Habit>> GetAllAsync(string userId);
-        Task<Habit?> GetByIdAsync(string id);
-        Task AddAsync(Habit habit);
-        Task UpdateAsync(Habit habit);
-        Task ArchiveAsync(string id);
+        Task<bool> AddHabitAsync(Habit habit);
+        Task<List<Habit>> GetHabitsAsync(string userid);
+        Task<Habit?> GetHabitAsync(string id);
+        Task<bool> UpdateHabitAsync(string id, string habitname, string habitdescription, string authorid, bool archived);
+        Task<bool> DeleteHabitAsync(string id);
     }
 }

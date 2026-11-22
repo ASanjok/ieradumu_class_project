@@ -71,7 +71,15 @@ namespace maui_app_ieradumi_2.Services
 
             }
         }
-        public async Task<bool> LoginAsync(string username, string password) // создан api endpoint
+        //^конструктор
+
+
+
+
+
+
+
+        public async Task<bool> LoginAsync(string username, string password) // создан api endpoint UserController
         {
             System.Diagnostics.Debug.WriteLine("запущена фукнция LoginAsync " + username + " | " + password);
             if (!string.IsNullOrEmpty(username) && !string.IsNullOrEmpty(password))
@@ -85,7 +93,7 @@ namespace maui_app_ieradumi_2.Services
             }
             return false;
         }
-        public async Task<bool> RegisterAsync(string username, string password) // создан api endpoint
+        public async Task<bool> RegisterAsync(string username, string password) // создан api endpoint UserController
         {
             if (!string.IsNullOrEmpty(username) && !string.IsNullOrEmpty(password))
             {
@@ -104,7 +112,7 @@ namespace maui_app_ieradumi_2.Services
             }
             return false;
         }
-        public async Task SaveHabitAsync(string name, string description, bool archived = false)
+        public async Task SaveHabitAsync(string name, string description, bool archived = false)// создан api endpoint HabitController
         {
             if (!string.IsNullOrEmpty(name) && !string.IsNullOrEmpty(description))
             {
@@ -124,14 +132,14 @@ namespace maui_app_ieradumi_2.Services
                 }
             }
         }
-        public async Task SaveHabitAsync(Habit habit)
-        {
-            if (habit != null)
-            {
-                await _connection.InsertAsync(habit);
-            }
-        }
-        public async Task<List<Habit>> GetHabitListAsync(string userId)
+        //public async Task SaveHabitAsync(Habit habit)
+        //{
+        //    if (habit != null)
+        //    {
+        //        await _connection.InsertAsync(habit);
+        //    }
+        //}
+        public async Task<List<Habit>> GetHabitListAsync(string userId) // создан api endpoint HabitController
         {
             if (!string.IsNullOrEmpty(userId))
             {
@@ -140,7 +148,7 @@ namespace maui_app_ieradumi_2.Services
             }
             return new List<Habit>();
         }
-        public async Task<Habit?> GetHabitAsync(string habitId)
+        public async Task<Habit?> GetHabitAsync(string habitId)// создан api endpoint HabitController
         {
             if (!string.IsNullOrEmpty(habitId))
             {
@@ -149,7 +157,7 @@ namespace maui_app_ieradumi_2.Services
             }
             return null;
         }
-        public async Task EditHabitAsync(string ID, Habit habit)
+        public async Task EditHabitAsync(string ID, Habit habit)// создан api endpoint HabitController
         {
             if (!string.IsNullOrEmpty(ID) && habit != null)
             {
@@ -164,7 +172,7 @@ namespace maui_app_ieradumi_2.Services
                 }
             }
         }
-        public async Task DeleteHabitAsync(string habitId)
+        public async Task DeleteHabitAsync(string habitId)// создан api endpoint HabitController
         {
             System.Diagnostics.Debug.WriteLine("запущена функция Delete habit async");
             if (!string.IsNullOrEmpty(habitId))
@@ -178,7 +186,7 @@ namespace maui_app_ieradumi_2.Services
                 }
             }
         }
-        public async Task<User?> GetUserByIdAsync(string userId) // создан api endpoint
+        public async Task<User?> GetUserByIdAsync(string userId) // создан api endpoint UserController
         {
             if (!string.IsNullOrEmpty(userId))
             {
@@ -187,14 +195,14 @@ namespace maui_app_ieradumi_2.Services
             }
             return null;
         }
-        public async Task UpdateUserAsync(User user) // создан api endpoint
+        public async Task UpdateUserAsync(User user) // создан api endpoint UserController
         {
             if (user != null)
             {
                 await _connection.UpdateAsync(user);
             }
         }
-        public async Task<Schedule?> GetScheduleByUserIdAsync(string userId)
+        public async Task<Schedule?> GetScheduleByUserIdAsync(string userId)// создан api endpoint ScheduleController
         {
             if (string.IsNullOrEmpty(userId)) return null;
 
@@ -221,7 +229,7 @@ namespace maui_app_ieradumi_2.Services
             return schedule;
         }
 
-        public async Task UpdateScheduleAsync(Schedule schedule)
+        public async Task UpdateScheduleAsync(Schedule schedule)// создан api endpoint ScheduleController
         {
             System.Diagnostics.Debug.WriteLine("UpdateScheduleAsync (Реляционный) -----");
 
@@ -249,7 +257,7 @@ namespace maui_app_ieradumi_2.Services
             }
         }
 
-        public async Task SoftDeleteHabitScheduleAsync(string scheduleId, string habitId, string dayOfWeek, TimeSpan scheduledTime)
+        public async Task SoftDeleteHabitScheduleAsync(string scheduleId, string habitId, string dayOfWeek, TimeSpan scheduledTime)// создан api endpoint ScheduleController
         {
             if (string.IsNullOrEmpty(scheduleId) || string.IsNullOrEmpty(habitId)) return;
 
@@ -274,7 +282,7 @@ namespace maui_app_ieradumi_2.Services
             }
         }
 
-        public async Task<List<CompletionRecord>> GetCompletionsByUserAndDateAsync(string userId, DateTime date)
+        public async Task<List<CompletionRecord>> GetCompletionsByUserAndDateAsync(string userId, DateTime date)// создан api endpoint CompletionRecordController
         {
             var startOfDay = date.Date;
             var endOfDay = startOfDay.AddDays(1);
@@ -286,7 +294,7 @@ namespace maui_app_ieradumi_2.Services
                 .ToListAsync();
         }
 
-        public async Task AddCompletionAsync(string habitId, string userId, DateTime completionDate, bool inTime, bool hasTheRecordBeenUsed, Dictionary<string, TimeOnly> scheduleTime)
+        public async Task AddCompletionAsync(string habitId, string userId, DateTime completionDate, bool inTime, bool hasTheRecordBeenUsed, Dictionary<string, TimeOnly> scheduleTime)// создан api endpoint CompletionRecordController
         {
             CompletionRecord record = new CompletionRecord()
             {

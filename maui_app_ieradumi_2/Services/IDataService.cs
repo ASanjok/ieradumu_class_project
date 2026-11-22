@@ -11,7 +11,6 @@ namespace maui_app_ieradumi_2.Services
         Task<bool> RegisterAsync(string username, string password);
         Task<List<Habit>> GetHabitListAsync(string userIdTask);
         Task SaveHabitAsync(string habitName, string habitDescription, bool archived = false);
-        Task SaveHabitAsync(Habit habit);
         Task EditHabitAsync(string ID,Habit habit);
         Task<Habit?> GetHabitAsync(string habitId);
         Task DeleteHabitAsync(string habitId);
