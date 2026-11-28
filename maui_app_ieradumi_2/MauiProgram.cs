@@ -2,7 +2,7 @@
 using maui_app_ieradumi_2.ViewModels;
 using maui_app_ieradumi_2.Views;
 using Microsoft.Extensions.Logging;
-using static maui_app_ieradumi_2.ViewModels.AddHabitToScheduleViewModel;
+using Microsoft.Extensions.Http;
 
 namespace maui_app_ieradumi_2
 {
@@ -19,9 +19,27 @@ namespace maui_app_ieradumi_2
                     fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
                 });
 
+
+            string baseAddress = DeviceInfo.Platform == DevicePlatform.Android
+                ? "https://10.0.2.2:7103/"   // Для Android-эмулятора localhost ПК доступен по IP 10.0.2.2
+                : "https://localhost:7103/"; // Для Windows / iOS Simulator
+
+            builder.Services.AddHttpClient<IDataService, DataService>(client =>
+            {
+                client.BaseAddress = new Uri(baseAddress);
+                client.Timeout = TimeSpan.FromSeconds(15);
+            }).ConfigurePrimaryHttpMessageHandler(() =>
+            {
+                // Разрешаем локальный SSL-сертификат разработки (localhost)
+                return new HttpClientHandler
+                {
+                    ServerCertificateCustomValidationCallback = (message, cert, chain, errors) => true
+                };
+            });
+
             // Регистрация сервисов, view и ViewModel
             //-----------------------------------------------------------------
-            builder.Services.AddSingleton<IDataService, DataService>();
+            //builder.Services.AddSingleton<IDataService, DataService>();
 
             builder.Services.AddTransient<AuthViewModel>();
             builder.Services.AddTransient<HabitListViewModel>();

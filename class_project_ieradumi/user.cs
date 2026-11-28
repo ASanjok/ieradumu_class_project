@@ -23,8 +23,8 @@ namespace class_project_ieradumi
             } 
         }
 
-        private string _email;
-        public string Email { 
+        private string? _email;
+        public string? Email { 
             get => _email; 
             set 
             { 
