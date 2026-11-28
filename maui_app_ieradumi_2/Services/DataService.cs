@@ -1,6 +1,8 @@
 ﻿using System.Net.Http.Json;
 using class_project_ieradumi;
 
+//для тестового комита в отдельную ветку
+
 namespace maui_app_ieradumi_2.Services
 {
     internal class DataService : IDataService
