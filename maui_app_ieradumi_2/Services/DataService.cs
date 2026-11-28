@@ -5,6 +5,8 @@ using SQLite;
 using class_project_ieradumi;
 using maui_app_ieradumi_2.Views;
 
+//для тестового комита в отдельную ветку
+
 namespace maui_app_ieradumi_2.Services
 {
     internal class DataService : IDataService
